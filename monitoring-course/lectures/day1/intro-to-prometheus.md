@@ -1,64 +1,64 @@
-# Prometheus: Theory and Architecture Studybook
+# Prometheus: Theory and Architecture
 
 ## Sisukord
 
-1. [Introduction to Prometheus](#1-introduction-to-prometheus)
+## Sisukord
 
-2. [Core Concepts](#2-core-concepts)
-   2.1 [Time Series Data Model](#21-time-series-data-model)
-   2.2 [Metric Types](#22-metric-types)
-   2.3 [Labels and Dimensions](#23-labels-and-dimensions)
+1. [Introduction to Prometheus](#introduction-to-prometheus)
 
-3. [Architecture Overview](#3-architecture-overview)
-   3.1 [High-level Architecture](#31-high-level-architecture)
-   3.2 [Main Components](#32-main-components)
-   3.3 [Data Flow](#33-data-flow)
+2. [Core Concepts](#core-concepts)
+   2.1 [Time Series Data Model](#time-series-data-model)
+   2.2 [Metric Types](#metric-types)
+   2.3 [Labels and Dimensions](#labels-and-dimensions)
 
-4. [Data Collection](#4-data-collection)
-   4.1 [Pull Model vs. Push Model](#41-pull-model-vs-push-model)
-   4.2 [Exporters](#42-exporters)
-   4.3 [Service Discovery](#43-service-discovery)
+3. [Architecture Overview](#architecture-overview)
+   3.1 [High-level Architecture](#high-level-architecture)
+   3.2 [Main Components](#main-components)
+   3.3 [Data Flow](#data-flow)
 
-5. [PromQL (Prometheus Query Language)](#5-promql-prometheus-query-language)
-   5.1 [Basic Query Syntax](#51-basic-query-syntax)
-   5.2 [Common Operators and Functions](#52-common-operators-and-functions)
-   5.3 [Example Queries](#53-example-queries)
+4. [Data Collection](#data-collection)
+   4.1 [Pull Model vs. Push Model](#pull-model-vs-push-model)
+   4.2 [Exporters](#exporters)
+   4.3 [Service Discovery](#service-discovery)
 
-6. [Storage](#6-storage)
-   6.1 [Local Storage](#61-local-storage)
-   6.2 [Long-term Storage Options](#62-long-term-storage-options)
-   6.3 [Retention and Compaction](#63-retention-and-compaction)
+5. [PromQL (Prometheus Query Language)](#promql-prometheus-query-language)
+   5.1 [Basic Query Syntax](#basic-query-syntax)
+   5.2 [Common Operators and Functions](#common-operators-and-functions)
+   5.3 [Example Queries](#example-queries)
 
-7. [Alerting](#7-alerting)
-   7.1 [Alertmanager Overview](#71-alertmanager-overview)
-   7.2 [Alert Rules Configuration](#72-alert-rules-configuration)
-   7.3 [Notification Integrations](#73-notification-integrations)
+6. [Storage](#storage)
+   6.1 [Local Storage](#local-storage)
+   6.2 [Long-term Storage Options](#long-term-storage-options)
+   6.3 [Retention and Compaction](#retention-and-compaction)
 
-8. [Visualization](#8-visualization)
-   8.1 [Built-in Expression Browser](#81-built-in-expression-browser)
-   8.2 [Integration with Grafana](#82-integration-with-grafana)
-   8.3 [Example Dashboards](#83-example-dashboards)
+7. [Alerting](#alerting)
+   7.1 [Alertmanager Overview](#alertmanager-overview)
+   7.2 [Alert Rules Configuration](#alert-rules-configuration)
+   7.3 [Notification Integrations](#notification-integrations)
 
-9. [Best Practices](#9-best-practices)
-   9.1 [Naming Conventions](#91-naming-conventions)
-   9.2 [Cardinality Considerations](#92-cardinality-considerations)
-   9.3 [Performance Optimization Tips](#93-performance-optimization-tips)
+8. [Visualization](#visualization)
+   8.1 [Built-in Expression Browser](#built-in-expression-browser)
+   8.2 [Integration with Grafana](#integration-with-grafana)
+   8.3 [Example Dashboards](#example-dashboards)
 
-10. [Prometheus Ecosystem](#10-prometheus-ecosystem)
-    10.1 [Related Projects](#101-related-projects)
-    10.2 [Community and Resources](#102-community-and-resources)
+9. [Best Practices](#best-practices)
+   9.1 [Naming Conventions](#naming-conventions)
+   9.2 [Cardinality Considerations](#cardinality-considerations)
+   9.3 [Performance Optimization Tips](#performance-optimization-tips)
 
-11. [Comparison with Other Monitoring Solutions](#11-comparison-with-other-monitoring-solutions)
-    11.1 [Prometheus vs. Other Tools](#111-prometheus-vs-other-tools)
-    11.2 [Use Cases Where Prometheus Excels](#112-use-cases-where-prometheus-excels)
+10. [Prometheus Ecosystem](#prometheus-ecosystem)
+    10.1 [Related Projects](#related-projects)
+    10.2 [Community and Resources](#community-and-resources)
 
-12. [Conclusion](#12-conclusion)
-    12.1 [Key Strengths of Prometheus](#121-key-strengths-of-prometheus)
-    12.2 [Prometheus's Role in Modern Observability](#122-prometheuss-role-in-modern-observability)
-    12.3 [Future Perspectives](#123-future-perspectives)
-    12.4 [Final Thoughts](#124-final-thoughts)
+11. [Comparison with Other Monitoring Solutions](#comparison-with-other-monitoring-solutions)
+    11.1 [Prometheus vs. Other Tools](#prometheus-vs-other-tools)
+    11.2 [Use Cases Where Prometheus Excels](#use-cases-where-prometheus-excels)
 
-
+12. [Conclusion](#conclusion)
+    12.1 [Key Strengths of Prometheus](#key-strengths-of-prometheus)
+    12.2 [Prometheus's Role in Modern Observability](#prometheuss-role-in-modern-observability)
+    12.3 [Future Perspectives](#future-perspectives)
+    12.4 [Final Thoughts](#final-thoughts)
 
 ## 1. Introduction to Prometheus
 
