@@ -2,63 +2,61 @@
 
 ## Sisukord
 
-## Sisukord
-
 1. [Introduction to Prometheus](#introduction-to-prometheus)
 
 2. [Core Concepts](#core-concepts)
-   2.1 [Time Series Data Model](#time-series-data-model)
-   2.2 [Metric Types](#metric-types)
-   2.3 [Labels and Dimensions](#labels-and-dimensions)
+   - 2.1 [Time Series Data Model](#time-series-data-model)
+   - 2.2 [Metric Types](#metric-types)
+   - 2.3 [Labels and Dimensions](#labels-and-dimensions)
 
 3. [Architecture Overview](#architecture-overview)
-   3.1 [High-level Architecture](#high-level-architecture)
-   3.2 [Main Components](#main-components)
-   3.3 [Data Flow](#data-flow)
+   - 3.1 [High-level Architecture](#high-level-architecture)
+   - 3.2 [Main Components](#main-components)
+   - 3.3 [Data Flow](#data-flow)
 
 4. [Data Collection](#data-collection)
-   4.1 [Pull Model vs. Push Model](#pull-model-vs-push-model)
-   4.2 [Exporters](#exporters)
-   4.3 [Service Discovery](#service-discovery)
+   - 4.1 [Pull Model vs. Push Model](#pull-model-vs-push-model)
+   - 4.2 [Exporters](#exporters)
+   - 4.3 [Service Discovery](#service-discovery)
 
 5. [PromQL (Prometheus Query Language)](#promql-prometheus-query-language)
-   5.1 [Basic Query Syntax](#basic-query-syntax)
-   5.2 [Common Operators and Functions](#common-operators-and-functions)
-   5.3 [Example Queries](#example-queries)
+   - 5.1 [Basic Query Syntax](#basic-query-syntax)
+   - 5.2 [Common Operators and Functions](#common-operators-and-functions)
+   - 5.3 [Example Queries](#example-queries)
 
 6. [Storage](#storage)
-   6.1 [Local Storage](#local-storage)
-   6.2 [Long-term Storage Options](#long-term-storage-options)
-   6.3 [Retention and Compaction](#retention-and-compaction)
+   - 6.1 [Local Storage](#local-storage)
+   - 6.2 [Long-term Storage Options](#long-term-storage-options)
+   - 6.3 [Retention and Compaction](#retention-and-compaction)
 
 7. [Alerting](#alerting)
-   7.1 [Alertmanager Overview](#alertmanager-overview)
-   7.2 [Alert Rules Configuration](#alert-rules-configuration)
-   7.3 [Notification Integrations](#notification-integrations)
+   - 7.1 [Alertmanager Overview](#alertmanager-overview)
+   - 7.2 [Alert Rules Configuration](#alert-rules-configuration)
+   - 7.3 [Notification Integrations](#notification-integrations)
 
 8. [Visualization](#visualization)
-   8.1 [Built-in Expression Browser](#built-in-expression-browser)
-   8.2 [Integration with Grafana](#integration-with-grafana)
-   8.3 [Example Dashboards](#example-dashboards)
+   - 8.1 [Built-in Expression Browser](#built-in-expression-browser)
+   - 8.2 [Integration with Grafana](#integration-with-grafana)
+   - 8.3 [Example Dashboards](#example-dashboards)
 
 9. [Best Practices](#best-practices)
-   9.1 [Naming Conventions](#naming-conventions)
-   9.2 [Cardinality Considerations](#cardinality-considerations)
-   9.3 [Performance Optimization Tips](#performance-optimization-tips)
+   - 9.1 [Naming Conventions](#naming-conventions)
+   - 9.2 [Cardinality Considerations](#cardinality-considerations)
+   - 9.3 [Performance Optimization Tips](#performance-optimization-tips)
 
 10. [Prometheus Ecosystem](#prometheus-ecosystem)
-    10.1 [Related Projects](#related-projects)
-    10.2 [Community and Resources](#community-and-resources)
+    - 10.1 [Related Projects](#related-projects)
+    - 10.2 [Community and Resources](#community-and-resources)
 
 11. [Comparison with Other Monitoring Solutions](#comparison-with-other-monitoring-solutions)
-    11.1 [Prometheus vs. Other Tools](#prometheus-vs-other-tools)
-    11.2 [Use Cases Where Prometheus Excels](#use-cases-where-prometheus-excels)
+    - 11.1 [Prometheus vs. Other Tools](#prometheus-vs-other-tools)
+    - 11.2 [Use Cases Where Prometheus Excels](#use-cases-where-prometheus-excels)
 
 12. [Conclusion](#conclusion)
-    12.1 [Key Strengths of Prometheus](#key-strengths-of-prometheus)
-    12.2 [Prometheus's Role in Modern Observability](#prometheuss-role-in-modern-observability)
-    12.3 [Future Perspectives](#future-perspectives)
-    12.4 [Final Thoughts](#final-thoughts)
+    - 12.1 [Key Strengths of Prometheus](#key-strengths-of-prometheus)
+    - 12.2 [Prometheus's Role in Modern Observability](#prometheuss-role-in-modern-observability)
+    - 12.3 [Future Perspectives](#future-perspectives)
+    - 12.4 [Final Thoughts](#final-thoughts)
 
 ## 1. Introduction to Prometheus
 
@@ -143,6 +141,7 @@ Sildid on Prometheuse mitmemõõtmelise andmemudeli võtmeelement.
 - **Võimas pärimine**: Siltide abil saab teha keerukaid päringuid ja agregatsioone.
 
 Näide:
+
 ```
 http_requests_total{method="GET", endpoint="/api/users", status="200"} 1234
 http_requests_total{method="POST", endpoint="/api/users", status="201"} 56
@@ -150,6 +149,7 @@ http_requests_total{method="GET", endpoint="/api/products", status="200"} 789
 ```
 
 Selle struktuuri abil saame kergesti pärida:
+
 - Kõiki GET päringuid: `http_requests_total{method="GET"}`
 - Kõiki edukaid päringuid: `http_requests_total{status=~"2.."}`
 - Konkreetse lõpp-punkti päringuid: `http_requests_total{endpoint="/api/users"}`
@@ -171,10 +171,10 @@ Prometheuse arhitektuur koosneb mitmest põhikomponendist, mis töötavad koos, 
 1. **Prometheus Server**
    - See on Prometheuse süsteemi tuum.
    - Funktsioonid:
-     * Andmete kogumine (scraping)
-     * Andmete salvestamine
-     * PromQL päringute töötlemine
-     * Hoiatuste genereerimine
+     - Andmete kogumine (scraping)
+     - Andmete salvestamine
+     - PromQL päringute töötlemine
+     - Hoiatuste genereerimine
 
 2. **Client Libraries**
    - Kasutatakse rakenduste instrumenteerimiseks.
@@ -187,16 +187,16 @@ Prometheuse arhitektuur koosneb mitmest põhikomponendist, mis töötavad koos, 
 
 4. **Exporters**
    - Koguvad meetrikaid süsteemidest, mida ei saa otseselt instrumenteerida.
-   - Näited: 
-     * Node Exporter (Linux/Unix süsteemi meetrikad)
-     * MySQL Exporter (MySQL andmebaasi meetrikad)
+   - Näited:
+     - Node Exporter (Linux/Unix süsteemi meetrikad)
+     - MySQL Exporter (MySQL andmebaasi meetrikad)
 
 5. **Alertmanager**
    - Käsitleb Prometheus serverist tulevaid hoiatusi.
    - Funktsioonid:
-     * Hoiatuste grupeerimine
-     * Hoiatuste suunamine õigetele vastuvõtjatele
-     * Vaigistamine ja inhibeerimine
+     - Hoiatuste grupeerimine
+     - Hoiatuste suunamine õigetele vastuvõtjatele
+     - Vaigistamine ja inhibeerimine
 
 6. **Data Visualization Tools**
    - Prometheus sisaldab lihtsat väljenduste sirvijat (expression browser).
@@ -227,12 +227,14 @@ Andmete kogumine on Prometheuse üks põhifunktsioone. Mõistmine, kuidas Promet
 Prometheus kasutab peamiselt tõmbemudelit (pull model) andmete kogumiseks, mis eristab seda paljudest teistest jälgimissüsteemidest.
 
 **Tõmbemudel (Pull Model)**:
+
 - Prometheus "tõmbab" (scrape) meetrikaid regulaarselt sihtmärkidelt.
 - Eelised:
-  * Lihtsam seadistada ja hallata
-  * Prometheus saab kontrollida andmete kogumise sagedust
-  * Kergem tuvastada, kui sihtmärk on maas
+  - Lihtsam seadistada ja hallata
+  - Prometheus saab kontrollida andmete kogumise sagedust
+  - Kergem tuvastada, kui sihtmärk on maas
 - Näide konfiguratsioonist:
+
   ```yaml
   scrape_configs:
     - job_name: 'my_app'
@@ -242,11 +244,13 @@ Prometheus kasutab peamiselt tõmbemudelit (pull model) andmete kogumiseks, mis 
   ```
 
 **Tõukemudel (Push Model)**:
+
 - Toetatud läbi Pushgateway komponendi
 - Kasulik stsenaariumid:
-  * Lühiajalised tööd (nt. cron jobs)
-  * Süsteemid, mis on tulemüüri taga või muul põhjusel otse ligipääsmatud
+  - Lühiajalised tööd (nt. cron jobs)
+  - Süsteemid, mis on tulemüüri taga või muul põhjusel otse ligipääsmatud
 - Näide Pushgateway kasutamisest:
+
   ```python
   from prometheus_client import CollectorRegistry, Gauge, push_to_gateway
 
@@ -267,12 +271,13 @@ Eksportijad on olulised tööriistad Prometheuse ökosüsteemis, võimaldades j�
   2. Iseseisvad eksportijad (nt. MySQL eksportija)
 
 - **Populaarsed eksportijad**:
-  * Node Exporter: Kogub süsteemi meetrikaid (CPU, mälu, ketta kasutus jne)
-  * Blackbox Exporter: Võimaldab teha väliseid kontrollimisi (nt. HTTP endpoint'ide kontrollimine)
-  * MySQL Exporter: Kogub MySQL andmebaasi meetrikaid
-  * Elasticsearch Exporter: Jälgib Elasticsearch klastri tervist ja jõudlust
+  - Node Exporter: Kogub süsteemi meetrikaid (CPU, mälu, ketta kasutus jne)
+  - Blackbox Exporter: Võimaldab teha väliseid kontrollimisi (nt. HTTP endpoint'ide kontrollimine)
+  - MySQL Exporter: Kogub MySQL andmebaasi meetrikaid
+  - Elasticsearch Exporter: Jälgib Elasticsearch klastri tervist ja jõudlust
 
 - **Eksportija näide** (lihtsustatud Node Exporter väljund):
+
   ```
   # HELP node_cpu_seconds_total Seconds the CPUs spent in each mode.
   # TYPE node_cpu_seconds_total counter
@@ -292,8 +297,9 @@ Eksportijate kasutamine võimaldab Prometheus'el koguda meetrikaid paljudest eri
 Teenuste avastamine on oluline funktsioon dünaamilistes keskkondades, kus sihtmärgid võivad sageli muutuda.
 
 - **Staatiline konfiguratsioon**:
-  * Lihtne, kuid vähem paindlik
-  * Näide:
+  - Lihtne, kuid vähem paindlik
+  - Näide:
+
     ```yaml
     scrape_configs:
       - job_name: 'static_nodes'
@@ -302,13 +308,14 @@ Teenuste avastamine on oluline funktsioon dünaamilistes keskkondades, kus sihtm
     ```
 
 - **Dünaamiline teenuste avastamine**:
-  * Toetatud platvormid:
+  - Toetatud platvormid:
     - Kubernetes
     - Consul
     - AWS EC2
     - Azure
     - ja paljud teised
-  * Näide Kubernetes'e teenuste avastamisest:
+  - Näide Kubernetes'e teenuste avastamisest:
+
     ```yaml
     scrape_configs:
       - job_name: 'kubernetes-pods'
@@ -321,9 +328,9 @@ Teenuste avastamine on oluline funktsioon dünaamilistes keskkondades, kus sihtm
     ```
 
 - **Eelised**:
-  * Automaatne kohanemine muutuvate keskkondadega
-  * Vähendab käsitsi konfigureerimise vajadust dünaamilistes infrastruktuurides
-  * Võimaldab jälgimissüsteemil kasvada ja kahaneda koos infrastruktuuriga
+  - Automaatne kohanemine muutuvate keskkondadega
+  - Vähendab käsitsi konfigureerimise vajadust dünaamilistes infrastruktuurides
+  - Võimaldab jälgimissüsteemil kasvada ja kahaneda koos infrastruktuuriga
 
 Teenuste avastamine on eriti kasulik pilvekeskkondades ja konteineripõhistes arhitektuurides, kus teenused võivad dünaamiliselt tekkida ja kaduda.
 
@@ -336,64 +343,69 @@ PromQL on Prometheus'e võimas päringukeele, mis võimaldab kasutajatel andmeid
 PromQL päringud on disainitud olema intuitiivsed ja võimsad.
 
 - **Meetrika nime valimine**:
-  * Lihtsaim päring on meetrika nime kirjutamine
-  * Näide: `http_requests_total`
+  - Lihtsaim päring on meetrika nime kirjutamine
+  - Näide: `http_requests_total`
 
 - **Siltide sobitamine**:
-  * Kasuta loogelisi sulge `{}` siltide määramiseks
-  * Näide: `http_requests_total{status="200", method="GET"}`
+  - Kasuta loogelisi sulge `{}` siltide määramiseks
+  - Näide: `http_requests_total{status="200", method="GET"}`
 
 - **Ajavahemiku valimine**:
-  * Kasuta nurksulge `[]` ajavahemiku määramiseks
-  * Näide: `http_requests_total[5m]` - viimase 5 minuti andmed
+  - Kasuta nurksulge `[]` ajavahemiku määramiseks
+  - Näide: `http_requests_total[5m]` - viimase 5 minuti andmed
 
 ### 5.2 Common Operators and Functions
 
 PromQL pakub mitmeid operaatoreid ja funktsioone andmete manipuleerimiseks.
 
 - **Aritmeetilised operaatorid**: `+`, `-`, `*`, `/`, `%`, `^`
-  * Näide: `(node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / node_memory_MemTotal_bytes`
+  - Näide: `(node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / node_memory_MemTotal_bytes`
 
 - **Võrdlusoperaatorid**: `==`, `!=`, `>`, `<`, `>=`, `<=`
-  * Näide: `http_requests_total > 100`
+  - Näide: `http_requests_total > 100`
 
 - **Loogikaoperaatorid**: `and`, `or`, `unless`
-  * Näide: `http_requests_total{status="500"} or http_requests_total{status="503"}`
+  - Näide: `http_requests_total{status="500"} or http_requests_total{status="503"}`
 
 - **Agregeerimisoperaatorid**: `sum`, `avg`, `min`, `max`, `count`
-  * Näide: `sum(http_requests_total) by (status)`
+  - Näide: `sum(http_requests_total) by (status)`
 
 - **Funktsioonid**:
-  * `rate()`: Arvutab keskmise muutuse sekundis
-  * `increase()`: Arvutab väärtuse suurenemise
-  * `histogram_quantile()`: Arvutab histogrammi kvantiili
-  * Näide: `rate(http_requests_total[5m])`
+  - `rate()`: Arvutab keskmise muutuse sekundis
+  - `increase()`: Arvutab väärtuse suurenemise
+  - `histogram_quantile()`: Arvutab histogrammi kvantiili
+  - Näide: `rate(http_requests_total[5m])`
 
 ### 5.3 Example Queries
 
 Vaatame mõnda praktilist näidet, mis demonstreerivad PromQL'i võimsust:
 
 1. HTTP päringute kiirus viimase 5 minuti jooksul:
+
    ```
    rate(http_requests_total[5m])
    ```
 
 2. 95. protsentiil päringu kestusest:
+
    ```
    histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))
    ```
 
 3. Top 5 CPU-d kasutavat protsessi:
+
    ```
    topk(5, sum by (process) (rate(process_cpu_seconds_total[5m])))
    ```
 
 4. Vaba mälu protsent:
+
    ```
    (node_memory_MemFree_bytes / node_memory_MemTotal_bytes) * 100
    ```
 
 5. Keskmine päringu kiirus minuti kohta, grupeeritud staatuse koodi järgi:
+
    ```
    sum(rate(http_requests_total[5m])) by (status) * 60
    ```
@@ -409,26 +421,27 @@ Prometheus'e salvestussüsteem on optimeeritud ajaseeria andmete jaoks, pakkudes
 Prometheus kasutab kohalikku salvestust, mis põhineb kohandatud ajaseeria andmebaasil (TSDB).
 
 - **Salvestusformaat**:
-  * Andmed on grupeeritud plokkidesse (tavaliselt 2 tunni andmed)
-  * Iga plokk sisaldab:
+  - Andmed on grupeeritud plokkidesse (tavaliselt 2 tunni andmed)
+  - Iga plokk sisaldab:
     - Indeksi faili kiireks otsinguks
     - Ühte või mitut segment faili, mis sisaldavad tegelikke ajaseeria andmeid
 
 - **Efektiivsus**:
-  * Optimeeritud kirjutamise ja lugemise jõudlusele
-  * Kasutab Delta-of-Delta kodeerimist andmete tihendamiseks
+  - Optimeeritud kirjutamise ja lugemise jõudlusele
+  - Kasutab Delta-of-Delta kodeerimist andmete tihendamiseks
 
 - **Mälu ja ketta kasutus**:
-  * Aktiivne andmeplokk hoitakse mälus kiireks kirjutamiseks
-  * Vanemad plokid hoitakse kettal
+  - Aktiivne andmeplokk hoitakse mälus kiireks kirjutamiseks
+  - Vanemad plokid hoitakse kettal
 
 ### 6.2 Long-term Storage Options
 
 Kuigi Prometheus on disainitud lühiajaliseks salvestuseks, on mitmeid võimalusi pikaajaliste andmete säilitamiseks.
 
 - **Remote Write/Read API**:
-  * Võimaldab Prometheus'el saata ja lugeda andmeid välisest salvestussüsteemist
-  * Konfigureerimise näide:
+  - Võimaldab Prometheus'el saata ja lugeda andmeid välisest salvestussüsteemist
+  - Konfigureerimise näide:
+
     ```yaml
     remote_write:
       - url: "http://remote-storage-server:9201/write"
@@ -437,23 +450,24 @@ Kuigi Prometheus on disainitud lühiajaliseks salvestuseks, on mitmeid võimalus
     ```
 
 - **Integratsioon teiste süsteemidega**:
-  * Thanos: Võimaldab luua kõrgkäideldava Prometheus'e seadistuse pikaajalise salvestusega
-  * Cortex: Horisontaalselt skaleeruv, kõrgkäideldav Prometheus teenusena
-  * M3DB: Hajutatud ajaseeria andmebaas ja agregaatorisüsteem
+  - Thanos: Võimaldab luua kõrgkäideldava Prometheus'e seadistuse pikaajalise salvestusega
+  - Cortex: Horisontaalselt skaleeruv, kõrgkäideldav Prometheus teenusena
+  - M3DB: Hajutatud ajaseeria andmebaas ja agregaatorisüsteem
 
 ### 6.3 Retention and Compaction
 
 Andmete säilitamine ja tihendamine on olulised Prometheus'e jõudluse ja ressursikasutuse haldamisel.
 
 - **Vaikimisi säilitusaeg**: 15 päeva (konfigureeritav)
-  * Muutmiseks kasuta `--storage.tsdb.retention.time` lippu
+  - Muutmiseks kasuta `--storage.tsdb.retention.time` lippu
 
 - **Tihendamisprotsess**:
-  * Ühendab väiksemad andmeplokid suuremateks
-  * Vähendab kettakasutust ja parandab päringu jõudlust
-  * Toimub automaatselt taustal
+  - Ühendab väiksemad andmeplokid suuremateks
+  - Vähendab kettakasutust ja parandab päringu jõudlust
+  - Toimub automaatselt taustal
 
 - **Näide konfiguratsioonist**:
+
   ```yaml
   storage:
     tsdb:
@@ -473,21 +487,22 @@ Hoiatuste genereerimine ja haldamine on üks Prometheus'e põhifunktsioone, või
 Alertmanager on Prometheus'e ökosüsteemi osa, mis vastutab hoiatuste käsitlemise eest.
 
 - **Põhifunktsioonid**:
-  * Hoiatuste vastuvõtmine Prometheus serverilt
-  * Hoiatuste deduplitseerimine
-  * Grupeerimine
-  * Marsruutimine õigetele vastuvõtjatele
-  * Vaigistamine ja inhibeerimine
+  - Hoiatuste vastuvõtmine Prometheus serverilt
+  - Hoiatuste deduplitseerimine
+  - Grupeerimine
+  - Marsruutimine õigetele vastuvõtjatele
+  - Vaigistamine ja inhibeerimine
 
 - **Arhitektuur**:
-  * Töötab eraldi teenusena Prometheus serverist
-  * Võib olla konfigureeritud kõrgkäideldavasse klastri konfiguratsiooni
+  - Töötab eraldi teenusena Prometheus serverist
+  - Võib olla konfigureeritud kõrgkäideldavasse klastri konfiguratsiooni
 
 ### 7.2 Alert Rules Configuration
 
 Hoiatuste reeglid defineeritakse Prometheus'e konfiguratsioonis.
 
 - **Reeglite struktuur**:
+
   ```yaml
   groups:
     - name: example
@@ -502,24 +517,25 @@ Hoiatuste reeglid defineeritakse Prometheus'e konfiguratsioonis.
   ```
 
 - **Komponendid**:
-  * `alert`: Hoiatuse nimi
-  * `expr`: PromQL väljend, mis määratleb hoiatuse tingimuse
-  * `for`: Aeg, kui kaua tingimus peab olema tõene enne hoiatuse käivitamist
-  * `labels`: Võimaldavad hoiatusi kategoriseerida ja marsruutida
-  * `annotations`: Lisainfo hoiatuse kohta, tavaliselt inimloetav
+  - `alert`: Hoiatuse nimi
+  - `expr`: PromQL väljend, mis määratleb hoiatuse tingimuse
+  - `for`: Aeg, kui kaua tingimus peab olema tõene enne hoiatuse käivitamist
+  - `labels`: Võimaldavad hoiatusi kategoriseerida ja marsruutida
+  - `annotations`: Lisainfo hoiatuse kohta, tavaliselt inimloetav
 
 ### 7.3 Notification Integrations
 
 Alertmanager saab saata teavitusi mitmesse erinevasse sihtkohta.
 
 - **Populaarsed integratsioonid**:
-  * Email
-  * Slack
-  * PagerDuty
-  * OpsGenie
-  * Webhook (võimaldab integratsiooni kohandatud süsteemidega)
+  - Email
+  - Slack
+  - PagerDuty
+  - OpsGenie
+  - Webhook (võimaldab integratsiooni kohandatud süsteemidega)
 
 - **Näide konfiguratsioonist** (Slack integratsioon):
+
   ```yaml
   receivers:
   - name: 'slack-notifications'
@@ -530,6 +546,7 @@ Alertmanager saab saata teavitusi mitmesse erinevasse sihtkohta.
   ```
 
 - **Marsruutimise näide**:
+
   ```yaml
   route:
     receiver: 'slack-notifications'
@@ -550,25 +567,25 @@ Kuigi Prometheus pakub lihtsat sisseehitatud graafilist liidest, kasutatakse sag
 Prometheus'e sisseehitatud väljenduste sirvija on kasulik kiireks andmete uurimiseks ja päringute testimiseks.
 
 - **Võimalused**:
-  * PromQL päringute käivitamine
-  * Tulemuste kuvamine graafikuna või tabelina
-  * Ajavahemiku valimine
-  * Lihtne graafiku formateerimine
+  - PromQL päringute käivitamine
+  - Tulemuste kuvamine graafikuna või tabelina
+  - Ajavahemiku valimine
+  - Lihtne graafiku formateerimine
 
 - **Kasutamine**:
-  * Juurdepääs tavaliselt aadressil `http://<prometheus-server>:9090/graph`
-  * Sobib hästi kiireks probleemide diagnoosimiseks ja päringute koostamiseks
+  - Juurdepääs tavaliselt aadressil `http://<prometheus-server>:9090/graph`
+  - Sobib hästi kiireks probleemide diagnoosimiseks ja päringute koostamiseks
 
 ### 8.2 Integration with Grafana
 
 Grafana on de facto standard Prometheus'e andmete visualiseerimiseks, pakkudes rikkalikku graafikute ja dashboardide loomise funktsionaalsust.
 
 - **Peamised eelised**:
-  * Rikkalik graafikute valik
-  * Dünaamilised ja interaktiivsed dashboardid
-  * Mallid ja muutujad
-  * Kasutajate autentimine ja autoriseerimine
-  * Mitmete andmeallikate toetus (lisaks Prometheus'ele)
+  - Rikkalik graafikute valik
+  - Dünaamilised ja interaktiivsed dashboardid
+  - Mallid ja muutujad
+  - Kasutajate autentimine ja autoriseerimine
+  - Mitmete andmeallikate toetus (lisaks Prometheus'ele)
 
 - **Prometheus'e andmeallika lisamine Grafanas**:
   1. Mine "Configuration" > "Data Sources"
@@ -583,35 +600,35 @@ Grafana on de facto standard Prometheus'e andmete visualiseerimiseks, pakkudes r
   6. Lisa pealkiri ja kirjeldus
 
 - **Dashboardide loomine**:
-  * Kombineeri mitu graafikut ühele dashboardile
-  * Kasuta ridu ja veerge paigutuse organiseerimiseks
-  * Lisa muutujaid dünaamilise sisu jaoks (nt. serveri valimiseks)
+  - Kombineeri mitu graafikut ühele dashboardile
+  - Kasuta ridu ja veerge paigutuse organiseerimiseks
+  - Lisa muutujaid dünaamilise sisu jaoks (nt. serveri valimiseks)
 
 - **Grafana mallid**:
-  * Võimaldavad luua taaskasutatavaid dashboarde
-  * Saab jagada Grafana kogukonnaga
-  * Näide: Node Exporter malli importimine annab kohe ülevaatliku serveri jälgimise dashboardi
+  - Võimaldavad luua taaskasutatavaid dashboarde
+  - Saab jagada Grafana kogukonnaga
+  - Näide: Node Exporter malli importimine annab kohe ülevaatliku serveri jälgimise dashboardi
 
 ### 8.3 Example Dashboards
 
 Vaatame mõnda praktilist näidet Prometheus + Grafana dashboardidest:
 
 1. **Süsteemi ülevaate dashboard**:
-   * CPU, mälu, ketta ja võrgu kasutus
-   * Süsteemi koormus ja protsesside arv
-   * Uptime ja põhilised süsteemi meetrikad
+   - CPU, mälu, ketta ja võrgu kasutus
+   - Süsteemi koormus ja protsesside arv
+   - Uptime ja põhilised süsteemi meetrikad
 
 2. **Rakenduse jõudluse dashboard**:
-   * Päringu latentsus (keskmised ja protsentiilid)
-   * Päringute arv sekundis
-   * Veamäär
-   * Aktiivse kasutajate arv
+   - Päringu latentsus (keskmised ja protsentiilid)
+   - Päringute arv sekundis
+   - Veamäär
+   - Aktiivse kasutajate arv
 
 3. **Veamäära ja latentsuse dashboard**:
-   * Veamäär erinevate teenuste lõikes
-   * Latentsus erinevate operatsioonide lõikes
-   * Aeglaste päringute loend
-   * Veateadete loend koos esinemissagedusega
+   - Veamäär erinevate teenuste lõikes
+   - Latentsus erinevate operatsioonide lõikes
+   - Aeglaste päringute loend
+   - Veateadete loend koos esinemissagedusega
 
 Näide Grafana dashboardi konfiguratsioonist (JSON väljavõte):
 
@@ -654,53 +671,54 @@ Prometheus'e efektiivseks kasutamiseks on oluline järgida teatud parimaid prakt
 Hea nimetamise tava aitab muuta meetrikad arusaadavamaks ja lihtsamini hallatavaks.
 
 - **Üldine formaat**: `<namespace>_<name>_<unit>`
-  * Näide: `http_requests_total`, `node_cpu_utilization_percentage`
+  - Näide: `http_requests_total`, `node_cpu_utilization_percentage`
 
 - **Nimede reeglid**:
-  * Kasuta ainult tähti, numbreid ja alakriipse
-  * Alusta meetrika nime tähega
-  * Väldi Prometheus'e reserveeritud eesliiteid (go_, promhttp_)
+  - Kasuta ainult tähti, numbreid ja alakriipse
+  - Alusta meetrika nime tähega
+  - Väldi Prometheus'e reserveeritud eesliiteid (go_, promhttp_)
 
 - **Siltide nimetamine**:
-  * Kasuta lühikesi, kirjeldavaid nimesid
-  * Väldi liigseid või korduvaid silte
+  - Kasuta lühikesi, kirjeldavaid nimesid
+  - Väldi liigseid või korduvaid silte
 
 - **Ühikud**:
-  * Lisa ühik meetrika nimesse, kui see pole ilmne
-  * Kasuta baasmõõtühikuid (sekundid, baidid), mitte tuletatud ühikuid
+  - Lisa ühik meetrika nimesse, kui see pole ilmne
+  - Kasuta baasmõõtühikuid (sekundid, baidid), mitte tuletatud ühikuid
 
 ### 9.2 Cardinality Considerations
 
 Kõrge kardinaliteedi vältimine on oluline Prometheus'e jõudluse säilitamiseks.
 
 - **Mis on kardinaliteet?**
-  * Unikaalsete ajaseeriate arv meetrika kohta
+  - Unikaalsete ajaseeriate arv meetrika kohta
 
 - **Kõrge kardinaliteedi ohud**:
-  * Suurendab mälukasutust
-  * Aeglustab päringute töötlemist
-  * Võib põhjustada Prometheus'e jõudluse probleeme
+  - Suurendab mälukasutust
+  - Aeglustab päringute töötlemist
+  - Võib põhjustada Prometheus'e jõudluse probleeme
 
 - **Kuidas vältida kõrget kardinaliteeti**:
-  * Väldi lõpmatu väärtuste hulgaga silte (nt. kasutaja ID-d, e-posti aadressid)
-  * Kasuta agregeerimist kõrge kardinaliteediga meetrikate jaoks
-  * Piira siltide arvu meetrika kohta
+  - Väldi lõpmatu väärtuste hulgaga silte (nt. kasutaja ID-d, e-posti aadressid)
+  - Kasuta agregeerimist kõrge kardinaliteediga meetrikate jaoks
+  - Piira siltide arvu meetrika kohta
 
 - **Näide hea vs halva praktika**:
-  * Halb: `http_requests_total{user_id="12345", email="user@example.com"}`
-  * Hea: `http_requests_total{status="200", endpoint="/api/users"}`
+  - Halb: `http_requests_total{user_id="12345", email="user@example.com"}`
+  - Hea: `http_requests_total{status="200", endpoint="/api/users"}`
 
 ### 9.3 Performance Optimization Tips
 
 Prometheus'e jõudluse optimeerimine aitab tagada süsteemi skaleeruvuse ja töökindluse.
 
 1. **Efektiivsed päringud**:
-   * Väldi liiga keerulisi päringuid, eriti dashboardides
-   * Kasuta agregeerimist, et vähendada töödeldavate andmete hulka
+   - Väldi liiga keerulisi päringuid, eriti dashboardides
+   - Kasuta agregeerimist, et vähendada töödeldavate andmete hulka
 
 2. **Recording rules**:
-   * Kasuta recording rules'e, et eelarvutada sageli kasutatavad päringud
-   * Näide:
+   - Kasuta recording rules'e, et eelarvutada sageli kasutatavad päringud
+   - Näide:
+
      ```yaml
      rules:
        - record: job:http_requests_total:sum
@@ -708,8 +726,9 @@ Prometheus'e jõudluse optimeerimine aitab tagada süsteemi skaleeruvuse ja tö�
      ```
 
 3. **Scrape intervallide kohandamine**:
-   * Kohandage scrape intervalle vastavalt vajadusele ja ressursside piirangutele
-   * Näide konfiguratsioonist:
+   - Kohandage scrape intervalle vastavalt vajadusele ja ressursside piirangutele
+   - Näide konfiguratsioonist:
+
      ```yaml
      scrape_configs:
        - job_name: 'high_frequency_job'
@@ -719,8 +738,9 @@ Prometheus'e jõudluse optimeerimine aitab tagada süsteemi skaleeruvuse ja tö�
      ```
 
 4. **Federatsioon suuremahuliste juurutuste jaoks**:
-   * Kasutage Prometheus'e federatsiooni, et jagada koormust mitme Prometheus'e instantsi vahel
-   * Näide federatsiooni konfiguratsioonist:
+   - Kasutage Prometheus'e federatsiooni, et jagada koormust mitme Prometheus'e instantsi vahel
+   - Näide federatsiooni konfiguratsioonist:
+
      ```yaml
      scrape_configs:
        - job_name: 'federate'
@@ -738,8 +758,9 @@ Prometheus'e jõudluse optimeerimine aitab tagada süsteemi skaleeruvuse ja tö�
      ```
 
 5. **Mälukasutuse optimeerimine**:
-   * Kohandage TSDB ploki suurust ja säilitusaega vastavalt vajadustele
-   * Näide konfiguratsioonist:
+   - Kohandage TSDB ploki suurust ja säilitusaega vastavalt vajadustele
+   - Näide konfiguratsioonist:
+
      ```yaml
      storage:
        tsdb:
@@ -758,37 +779,37 @@ Prometheus'e ümber on tekkinud lai ökosüsteem täiendavatest tööriistadest 
 1. **Thanos**:
    - Eesmärk: Kõrgkäideldav Prometheus'e seadistus pikaajalise salvestusega
    - Peamised omadused:
-     * Globaalne päring üle mitme Prometheus'e instantsi
-     * Piiramatu andmete säilitamine objektisalvestuses (nt. S3)
-     * Downsampling ja kompaktimine pikaajaliste andmete jaoks
+     - Globaalne päring üle mitme Prometheus'e instantsi
+     - Piiramatu andmete säilitamine objektisalvestuses (nt. S3)
+     - Downsampling ja kompaktimine pikaajaliste andmete jaoks
 
 2. **Cortex**:
    - Eesmärk: Horisontaalselt skaleeruv, kõrgkäideldav Prometheus teenusena
    - Peamised omadused:
-     * Mitme rentniku tugi
-     * Pikaajaline salvestus
-     * Kõrge kättesaadavus
+     - Mitme rentniku tugi
+     - Pikaajaline salvestus
+     - Kõrge kättesaadavus
 
 3. **Loki**:
    - Eesmärk: Logide agregeerimine, inspireeritud Prometheus'est
    - Peamised omadused:
-     * Sildipõhine logi indekseerimine
-     * Integratsioon Grafanaga
-     * Efektiivne salvestus ja päring
+     - Sildipõhine logi indekseerimine
+     - Integratsioon Grafanaga
+     - Efektiivne salvestus ja päring
 
 4. **Alertmanager**:
    - Eesmärk: Hoiatuste haldamine ja marsruutimine
    - Peamised omadused:
-     * Hoiatuste grupeerimine
-     * Vaigistamine ja inhibeerimine
-     * Mitmekülgsed teavituste integratsioonid
+     - Hoiatuste grupeerimine
+     - Vaigistamine ja inhibeerimine
+     - Mitmekülgsed teavituste integratsioonid
 
 5. **Blackbox Exporter**:
    - Eesmärk: Väliste teenuste ja lõpp-punktide testimine
    - Peamised omadused:
-     * HTTP, HTTPS, DNS, TCP ja ICMP kontrollid
-     * TLS kontrollid
-     * Vastuse sisu kontrollimine
+     - HTTP, HTTPS, DNS, TCP ja ICMP kontrollid
+     - TLS kontrollid
+     - Vastuse sisu kontrollimine
 
 ### 10.2 Community and Resources
 
@@ -832,38 +853,38 @@ Prometheus on üks paljudest jälgimislahendustest turul. Mõistmaks selle tugev
 
 1. **Prometheus vs. Graphite**:
    - Sarnasused:
-     * Mõlemad on ajaseeria andmebaasid
-     * Toetavad visualiseerimist ja hoiatusi
+     - Mõlemad on ajaseeria andmebaasid
+     - Toetavad visualiseerimist ja hoiatusi
    - Erinevused:
-     * Prometheus kasutab tõmbemudelit, Graphite tõukemudelit
-     * Prometheus'el on võimsam päringukeele (PromQL)
-     * Prometheus'el on sisseehitatud hoiatuste süsteem
+     - Prometheus kasutab tõmbemudelit, Graphite tõukemudelit
+     - Prometheus'el on võimsam päringukeele (PromQL)
+     - Prometheus'el on sisseehitatud hoiatuste süsteem
 
 2. **Prometheus vs. InfluxDB**:
    - Sarnasused:
-     * Mõlemad on optimeeritud ajaseeria andmete jaoks
-     * Pakuvad kõrget kirjutamise ja lugemise jõudlust
+     - Mõlemad on optimeeritud ajaseeria andmete jaoks
+     - Pakuvad kõrget kirjutamise ja lugemise jõudlust
    - Erinevused:
-     * InfluxDB kasutab tõukemudelit, Prometheus tõmbemudelit
-     * InfluxDB toetab SQL-sarnast päringukeelt (InfluxQL), Prometheus kasutab PromQL-i
-     * InfluxDB pakub kommertsiaalset ettevõtte versiooni lisafunktsioonidega
+     - InfluxDB kasutab tõukemudelit, Prometheus tõmbemudelit
+     - InfluxDB toetab SQL-sarnast päringukeelt (InfluxQL), Prometheus kasutab PromQL-i
+     - InfluxDB pakub kommertsiaalset ettevõtte versiooni lisafunktsioonidega
 
 3. **Prometheus vs. Nagios**:
    - Sarnasused:
-     * Mõlemad võimaldavad süsteemide ja teenuste jälgimist
-     * Toetavad hoiatuste genereerimist
+     - Mõlemad võimaldavad süsteemide ja teenuste jälgimist
+     - Toetavad hoiatuste genereerimist
    - Erinevused:
-     * Nagios on rohkem keskendunud kontrollidele, Prometheus mõõdikutele
-     * Prometheus pakub paremat skaleeruvust ja dünaamilist avastamist
-     * Prometheus'el on võimsam päringu ja visualiseerimise võimekus
+     - Nagios on rohkem keskendunud kontrollidele, Prometheus mõõdikutele
+     - Prometheus pakub paremat skaleeruvust ja dünaamilist avastamist
+     - Prometheus'el on võimsam päringu ja visualiseerimise võimekus
 
 4. **Prometheus vs. ELK Stack (Elasticsearch, Logstash, Kibana)**:
    - Sarnasused:
-     * Mõlemad võimaldavad andmete kogumist, salvestamist ja visualiseerimist
+     - Mõlemad võimaldavad andmete kogumist, salvestamist ja visualiseerimist
    - Erinevused:
-     * ELK on rohkem keskendunud logide analüüsile, Prometheus mõõdikutele
-     * Prometheus on lihtsam seadistada ja hallata
-     * ELK pakub võimsamaid tekstiotsingu võimalusi
+     - ELK on rohkem keskendunud logide analüüsile, Prometheus mõõdikutele
+     - Prometheus on lihtsam seadistada ja hallata
+     - ELK pakub võimsamaid tekstiotsingu võimalusi
 
 ### 11.2 Use Cases Where Prometheus Excels
 
