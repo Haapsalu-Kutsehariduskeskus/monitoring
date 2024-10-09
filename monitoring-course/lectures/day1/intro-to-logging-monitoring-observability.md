@@ -561,9 +561,32 @@ Monitoorimise maastik on lai ja mitmekesine, pakkudes lahendusi erinevatele vaja
    - Avatud lähtekoodiga, suure kogukonnaga
    - Tugev võrgu- ja serverimonitoorimine
 
-### 8.2 Koolitusel käsitletavad tööriistad
+### 8.2 Meie koolituse fookus
 
-[Siin jätkub eelmises versioonis toodud sisu tööriistade kohta, mida käsitletakse koolitusel]
+Meie neljapaevane koolitus keskendub järgmistele tööriistadele ja teemadele:
+
+#### Päev 1: Sissejuhatus ja põhitööriistad
+1. **Sissejuhatus logimisse, monitoorimisse ja jälgitavusse**
+2. **Prometheus**: Avatud lähtekoodiga monitoorimissüsteem
+3. **Grafana**: Andmete visualiseerimise platvorm
+
+#### Päev 2: Zabbix
+1. **Zabbix**: Ettevõtte taseme monitoorimislahendus
+   - Teooria ja arhitektuur
+   - Monitoorimise põhitõed ja võtmefunktsioonid
+   - Integratsioonid ja edasijõudnud teemad
+
+#### Päev 3: ELK Stack
+1. **Elasticsearch**: Otsingu- ja analüüsimootor
+2. **Logstash**: Andmete kogumise ja töötlemise tööriist
+3. **Kibana**: Visualiseerimise ja uurimise tööriist
+
+#### Päev 4: Jälgitavus ja edasijõudnud teemad
+1. **Hajutatud jälgimine**: OpenTelemetry, Jaeger ja Zipkin
+2. **TICK Stack**: InfluxData'i monitoorimislahendus
+3. **Loki ja Tempo**: Grafana ökosüsteemi täiendavad tööriistad
+4. **Struktureeritud logimine ja logihalduse parimad tavad**
+
 
 ### 8.3 Tööriistade valiku trendid ja tulevikusuunad
 

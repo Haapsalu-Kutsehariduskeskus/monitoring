@@ -577,7 +577,7 @@ Grafana on de facto standard Prometheus'e andmete visualiseerimiseks, pakkudes r
   4. Sisesta Prometheus'e serveri URL
   5. Salvesta ja testi ühendust
 
-- **Graafiku loomine** (jätkub):
+- **Graafiku loomine**:
   4. Vali graafiku tüüp (nt. joondiagramm, tulpdiagramm)
   5. Kohanda graafiku välimust (värve, telgi, legendisid)
   6. Lisa pealkiri ja kirjeldus
