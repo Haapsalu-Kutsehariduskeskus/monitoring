@@ -13,7 +13,7 @@ By the end of the course, participants will:
 
 ---
 
-## **Day 1: October 19, 10:00-16:00**
+## **Day 1: October 19, 10:00-15:45**
 
 ### Topics:
 - **Introduction to Logging, Monitoring, and Observability**
@@ -24,92 +24,34 @@ By the end of the course, participants will:
 - Lab 1: Linux Logging and Management
 - Lab 2: Zabbix Hands-On
 - Lab 3: Prometheus Hands-On
+- Lab 4: Visualizing Data with Grafana
 
 ### Schedule:
-- **10:00 - 10:30**: Introduction to Logging, Monitoring, and Observability
-- **10:30 - 10:45**: Refresher on Linux Logging and Management
-- **10:45 - 11:15**: Introduction to Prometheus, Zabbix, and Grafana
-- **11:15 - 11:30**: Break
-- **11:30 - 12:30**: Prometheus: Theory and Architecture
-- **12:30 - 13:00**: Lunch
-- **13:00 - 13:30**: Lab 1: Linux Logging and Management
-- **13:30 - 14:45**: Lab 2: Zabbix Hands-On
-- **14:45 - 15:45**: Lab 3: Prometheus Hands-On
-- **15:45 - 16:00**: Q&A and Wrap-up
+- **10:00 - 10:20**: Lab Environment Setup and Access
+- **10:20 - 10:55**: Introduction to Prometheus, Zabbix, and Grafana
+- **10:55 - 11:00**: Q&A Session
+- **11:00 - 11:20**: Lab 1: Linux Logging and Management
+- **11:20 - 12:00**: Lab 2: Zabbix Hands-On
+- **12:00 - 12:30**: Lunch
+- **12:30 - 14:00**: Lab 3: Prometheus Hands-On
+- **14:00 - 15:30**: Lab 4: Visualizing Data with Grafana
+- **15:30 - 15:45**: Wrap-up and Q&A
 
 ---
 
 ## **Day 2: November 2, 10:00-16:00**
 
-### Topics:
-- **Distributed Tracing and Observability Tools**
-  - Overview of distributed tracing.
-  - OpenTelemetry: Concepts and setup.
-  - Jaeger and Zipkin: Comparison and implementation.
 
-### Hands-on Labs:
-- Prometheus Lab Final
-
-### Schedule:
-- **10:00 - 10:15**: Review of Day 1 and Q&A
-- **10:15 - 11:15**: Prometheus Lab Final
-- **11:15 - 11:30**: Break
-- **11:30 - 12:00**: Introduction to Distributed Tracing
-- **12:00 - 12:45**: OpenTelemetry: Overview and Concepts
-- **12:45 - 13:00**: Break
-- **13:00 - 13:45**: Jaeger and Zipkin: Setup and Comparison
-- **13:45 - 14:15**: Lunch
-- **14:15 - 15:00**: TICK Stack: Overview and Key Components
-- **15:00 - 15:45**: Loki and Tempo: Integration with Grafana
-- **15:45 - 16:00**: Course Review and Closing Remarks
 
 ---
 
 ## **Day 3: November 9, 10:00-16:00**
 
-### Topics:
-- **ELK Stack (Elasticsearch, Logstash, Kibana)**
-  - Overview and architecture of the ELK stack.
-  - Elasticsearch: Setup and use cases.
-  - Logstash and Kibana: Configuration and visualization.
-
-### Hands-on Labs:
-- ELK Stack Integrated Hands-on Exercise
-
-### Schedule:
-- **10:00 - 10:15**: Review of Day 2 and Q&A
-- **10:15 - 11:00**: ELK Stack Overview and Architecture
-- **11:00 - 11:15**: Break
-- **11:15 - 12:15**: Elasticsearch: Setup and Configuration
-- **12:15 - 12:45**: Logstash: Overview and Configuration
-- **12:45 - 13:15**: Lunch
-- **13:15 - 14:15**: Kibana: Basics and Visualization
-- **14:15 - 15:30**: ELK Stack: Integrated Hands-on Lab
-- **15:30 - 16:00**: Q&A and Wrap-up
 
 ---
 
 ## **Day 4: November 16, 10:00-16:00**
 
-### Topics:
-- **Advanced Logging and Tracing Tools**
-  - Splunk: Capabilities and enterprise use cases.
-  - Loki and Tempo: Log aggregation and distributed tracing.
-  - Structured logging and JSON logging.
-
-### Hands-on Labs:
-- Lab 13: Installing and Configuring Splunk
-- Lab 14: Deploying Loki and Tempo
-- Lab 15: Integrating Loki and Tempo with Grafana
-- Lab 16: Implementing Structured and JSON Logging
-
-### Schedule:
-- **10:00 - 10:15**: Review of Day 3 and Q&A
-- **10:15 - 11:00**: Lecture: Advanced Logging and Tracing Tools
-- **11:00 - 13:15**: Hands-on Labs: Splunk, Loki, and Tempo Setup
-- **13:15 - 13:45**: Lunch
-- **13:45 - 15:45**: Hands-on Labs: Loki, Tempo Integration, and Structured Logging
-- **15:45 - 16:00**: Wrap-up and Course Conclusion
 
 ---
 
