@@ -1,3 +1,5 @@
+Requirements: Digital Ocean, local PC with Github Desktop/VScode/Docker Desktop
+
 repo:
 https://github.com/mashaeg/grafana
 
