@@ -1,3 +1,5 @@
+requirements: Digital Ocean
+
 manual: 
 lab1:
 https://docs.google.com/document/d/14IR89E0N8osljUamooBTI6H0RBm7TeuzL847BL62eOw/edit?usp=sharing
