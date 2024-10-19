@@ -14,6 +14,8 @@ By the end of the course, participants will:
 ---
 
 ## **Day 1: October 19, 10:00-15:45**
+### Slides: 
+https://gamma.app/docs/Sissejuhatus-logimisse-monitooringusse-ja-vaadeldavusse-ldx5jslah6cu7ep
 
 ### Topics:
 - **Introduction to Logging, Monitoring, and Observability**
