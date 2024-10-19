@@ -5,3 +5,6 @@ https://docs.google.com/document/d/1NMjHC8qi0RvVOfqVcUhHdsTeAOQCCoa6FQQJv3Tsz74/
 
 repo:
 https://github.com/mashaeg/grafana
+
+digitalocean:
+https://m.do.co/c/23d277be9014
