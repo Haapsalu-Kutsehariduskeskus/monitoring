@@ -8,3 +8,5 @@ https://github.com/mashaeg/grafana
 
 digitalocean:
 https://m.do.co/c/23d277be9014
+
+ref code: 23d277be9014
