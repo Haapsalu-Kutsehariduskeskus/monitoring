@@ -7,3 +7,8 @@ repo:
 https://github.com/mashaeg/grafana
 
 
+Free Trier AWS:
+https://aws.amazon.com/free/
+
+how to create VM:
+https://docs.google.com/document/d/1DJs5zdEUhXc873bpFx8FEHFPeY63xplAqEBh8mMP5fI/edit?usp=sharing
