@@ -1,4 +1,4 @@
-requirements:  Digital Ocean, local PC with Github Desktop/VScode/Docker Desktop
+requirements:  Cloud account, local PC with Github Desktop/VScode/Docker Desktop
 
 manual:
 https://docs.google.com/document/d/1NMjHC8qi0RvVOfqVcUhHdsTeAOQCCoa6FQQJv3Tsz74/edit?usp=sharing
@@ -6,7 +6,4 @@ https://docs.google.com/document/d/1NMjHC8qi0RvVOfqVcUhHdsTeAOQCCoa6FQQJv3Tsz74/
 repo:
 https://github.com/mashaeg/grafana
 
-digitalocean:
-https://m.do.co/c/23d277be9014
 
-ref code: 23d277be9014
