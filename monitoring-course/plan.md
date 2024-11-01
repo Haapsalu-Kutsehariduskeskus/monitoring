@@ -15,8 +15,6 @@
 
 ## Day 2: November 2, 10:00-16:00
 
-# Course Schedule
-
 ## Morning Session
 - **10:00 - 10:10**: Lab Environment Setup and Access in Cloud (10 min)
 - **10:10 - 10:30**: Introduction to Zabbix (20 min)
