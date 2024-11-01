@@ -1,0 +1,80 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="Arial" font-size="20" fill="#2d3748">
+    Agent Deployment Patterns
+  </text>
+  
+  <!-- Active Agent -->
+  <g transform="translate(100,100)">
+    <rect width="250" height="200" rx="10" fill="#ebf8ff"/>
+    <text x="125" y="30" text-anchor="middle" font-family="Arial" font-size="16" fill="#2c5282">
+      Active Agent
+    </text>
+    
+    <rect x="50" y="50" width="150" height="60" rx="8" fill="#4299e1"/>
+    <text x="125" y="85" text-anchor="middle" fill="white" font-family="Arial">Agent</text>
+    
+    <rect x="50" y="140" width="150" height="40" rx="5" fill="#2c5282"/>
+    <text x="125" y="165" text-anchor="middle" fill="white" font-family="Arial">Server</text>
+    
+    <path d="M125 110 L125 140" fill="none" stroke="#718096" stroke-width="2" marker-end="url(#arrow)"/>
+  </g>
+  
+  <!-- Passive Agent -->
+  <g transform="translate(450,100)">
+    <rect width="250" height="200" rx="10" fill="#f0fff4"/>
+    <text x="125" y="30" text-anchor="middle" font-family="Arial" font-size="16" fill="#2c5282">
+      Passive Agent
+    </text>
+    
+    <rect x="50" y="50" width="150" height="60" rx="8" fill="#4299e1"/>
+    <text x="125" y="85" text-anchor="middle" fill="white" font-family="Arial">Agent</text>
+    
+    <rect x="50" y="140" width="150" height="40" rx="5" fill="#2c5282"/>
+    <text x="125" y="165" text-anchor="middle" fill="white" font-family="Arial">Server</text>
+    
+    <path d="M125 140 L125 110" fill="none" stroke="#718096" stroke-width="2" marker-end="url(#arrow)"/>
+  </g>
+  
+  <!-- SNMP Monitoring -->
+  <g transform="translate(100,350)">
+    <rect width="250" height="200" rx="10" fill="#fef3f2"/>
+    <text x="125" y="30" text-anchor="middle" font-family="Arial" font-size="16" fill="#2c5282">
+      SNMP Monitoring
+    </text>
+    
+    <rect x="50" y="50" width="150" height="60" rx="8" fill="#fc8181"/>
+    <text x="125" y="85" text-anchor="middle" fill="white" font-family="Arial">Network Device</text>
+    
+    <rect x="50" y="140" width="150" height="40" rx="5" fill="#2c5282"/>
+    <text x="125" y="165" text-anchor="middle" fill="white" font-family="Arial">Server</text>
+    
+    <path d="M125 140 L125 110" fill="none" stroke="#718096" stroke-width="2" marker-end="url(#arrow)"/>
+  </g>
+  
+  <!-- Agentless -->
+  <g transform="translate(450,350)">
+    <rect width="250" height="200" rx="10" fill="#faf5ff"/>
+    <text x="125" y="30" text-anchor="middle" font-family="Arial" font-size="16" fill="#2c5282">
+      Agentless
+    </text>
+    
+    <rect x="50" y="50" width="150" height="60" rx="8" fill="#805ad5"/>
+    <text x="125" y="85" text-anchor="middle" fill="white" font-family="Arial">Remote Host</text>
+    
+    <rect x="50" y="140" width="150" height="40" rx="5" fill="#2c5282"/>
+    <text x="125" y="165" text-anchor="middle" fill="white" font-family="Arial">Server</text>
+    
+    <path d="M125 140 L125 110" fill="none" stroke="#718096" stroke-width="2" marker-end="url(#arrow)"/>
+  </g>
+  
+  <!-- Arrow Definition -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#718096"/>
+    </marker>
+  </defs>
+</svg>

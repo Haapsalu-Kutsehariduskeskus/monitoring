@@ -1,0 +1,37 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+  
+  <!-- Cloud/Internet -->
+  <path d="M350,50 C250,50 200,100 200,150 C150,150 100,200 100,250 C100,300 150,350 200,350 C200,400 250,450 350,450 C450,450 500,400 500,350 C550,350 600,300 600,250 C600,200 550,150 500,150 C500,100 450,50 350,50" 
+        fill="#e2e8f0" stroke="#718096" stroke-width="2"/>
+  <text x="350" y="250" text-anchor="middle" font-family="Arial" fill="#4a5568">Internet</text>
+  
+  <!-- Main Office -->
+  <rect x="50" y="500" width="200" height="80" rx="10" fill="#2c5282"/>
+  <text x="150" y="545" text-anchor="middle" fill="white" font-family="Arial">Main Office</text>
+  
+  <!-- Remote Office 1 -->
+  <rect x="300" y="500" width="200" height="80" rx="10" fill="#2c5282"/>
+  <text x="400" y="545" text-anchor="middle" fill="white" font-family="Arial">Remote Office 1</text>
+  
+  <!-- Remote Office 2 -->
+  <rect x="550" y="500" width="200" height="80" rx="10" fill="#2c5282"/>
+  <text x="650" y="545" text-anchor="middle" fill="white" font-family="Arial">Remote Office 2</text>
+  
+  <!-- Connections -->
+  <line x1="150" y1="500" x2="250" y2="350" stroke="#718096" stroke-width="2"/>
+  <line x1="400" y1="500" x2="400" y2="350" stroke="#718096" stroke-width="2"/>
+  <line x1="650" y1="500" x2="550" y2="350" stroke="#718096" stroke-width="2"/>
+  
+  <!-- Labels -->
+  <text x="180" y="420" text-anchor="middle" font-family="Arial" font-size="12" fill="#4a5568">
+    Direct Connection
+  </text>
+  <text x="400" y="420" text-anchor="middle" font-family="Arial" font-size="12" fill="#4a5568">
+    Proxy Server
+  </text>
+  <text x="620" y="420" text-anchor="middle" font-family="Arial" font-size="12" fill="#4a5568">
+    Proxy Server
+  </text>
+</svg>

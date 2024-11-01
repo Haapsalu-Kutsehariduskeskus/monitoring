@@ -1,0 +1,28 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f8f9fa"/>
+  
+  <!-- Components -->
+  <rect x="300" y="50" width="200" height="80" rx="10" fill="#2c5282"/>
+  <text x="400" y="95" text-anchor="middle" fill="white" font-family="Arial">Web Interface</text>
+  
+  <rect x="300" y="200" width="200" height="80" rx="10" fill="#2c5282"/>
+  <text x="400" y="245" text-anchor="middle" fill="white" font-family="Arial">Zabbix Server</text>
+  
+  <rect x="300" y="350" width="200" height="80" rx="10" fill="#38a169"/>
+  <text x="400" y="395" text-anchor="middle" fill="white" font-family="Arial">Database</text>
+  
+  <!-- Agents -->
+  <rect x="50" y="180" width="150" height="60" rx="8" fill="#4299e1"/>
+  <text x="125" y="215" text-anchor="middle" fill="white" font-family="Arial">Zabbix Agent</text>
+  
+  <!-- Proxy -->
+  <rect x="600" y="180" width="150" height="60" rx="8" fill="#805ad5"/>
+  <text x="675" y="215" text-anchor="middle" fill="white" font-family="Arial">Zabbix Proxy</text>
+  
+  <!-- Connections -->
+  <line x1="400" y1="130" x2="400" y2="200" stroke="#718096" stroke-width="2"/>
+  <line x1="400" y1="280" x2="400" y2="350" stroke="#718096" stroke-width="2"/>
+  <line x1="200" y1="210" x2="300" y2="240" stroke="#718096" stroke-width="2"/>
+  <line x1="600" y1="210" x2="500" y2="240" stroke="#718096" stroke-width="2"/>
+</svg>

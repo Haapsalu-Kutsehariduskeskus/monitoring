@@ -1,0 +1,63 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+  
+  <!-- Central Office -->
+  <rect x="300" y="50" width="200" height="80" rx="10" fill="#2c5282"/>
+  <text x="400" y="95" text-anchor="middle" fill="white" font-family="Arial">Zabbix Central Server</text>
+  
+  <!-- Office 1 -->
+  <g transform="translate(50,200)">
+    <rect width="200" height="150" rx="10" fill="#ebf8ff"/>
+    <text x="100" y="30" text-anchor="middle" font-family="Arial">Office 1</text>
+    
+    <rect x="25" y="50" width="150" height="40" rx="5" fill="#4299e1"/>
+    <text x="100" y="75" text-anchor="middle" fill="white" font-family="Arial">Zabbix Proxy</text>
+    
+    <rect x="25" y="100" width="60" height="30" rx="5" fill="#48bb78"/>
+    <text x="55" y="120" text-anchor="middle" fill="white" font-family="Arial">Agent</text>
+    
+    <rect x="115" y="100" width="60" height="30" rx="5" fill="#48bb78"/>
+    <text x="145" y="120" text-anchor="middle" fill="white" font-family="Arial">Agent</text>
+  </g>
+  
+  <!-- Office 2 -->
+  <g transform="translate(300,200)">
+    <rect width="200" height="150" rx="10" fill="#ebf8ff"/>
+    <text x="100" y="30" text-anchor="middle" font-family="Arial">Office 2</text>
+    
+    <rect x="25" y="50" width="150" height="40" rx="5" fill="#4299e1"/>
+    <text x="100" y="75" text-anchor="middle" fill="white" font-family="Arial">Zabbix Proxy</text>
+    
+    <rect x="25" y="100" width="60" height="30" rx="5" fill="#48bb78"/>
+    <text x="55" y="120" text-anchor="middle" fill="white" font-family="Arial">Agent</text>
+    
+    <rect x="115" y="100" width="60" height="30" rx="5" fill="#48bb78"/>
+    <text x="145" y="120" text-anchor="middle" fill="white" font-family="Arial">Agent</text>
+  </g>
+  
+  <!-- Office 3 -->
+  <g transform="translate(550,200)">
+    <rect width="200" height="150" rx="10" fill="#ebf8ff"/>
+    <text x="100" y="30" text-anchor="middle" font-family="Arial">Office 3</text>
+    
+    <rect x="25" y="50" width="150" height="40" rx="5" fill="#4299e1"/>
+    <text x="100" y="75" text-anchor="middle" fill="white" font-family="Arial">Zabbix Proxy</text>
+    
+    <rect x="25" y="100" width="60" height="30" rx="5" fill="#48bb78"/>
+    <text x="55" y="120" text-anchor="middle" fill="white" font-family="Arial">Agent</text>
+    
+    <rect x="115" y="100" width="60" height="30" rx="5" fill="#48bb78"/>
+    <text x="145" y="120" text-anchor="middle" fill="white" font-family="Arial">Agent</text>
+  </g>
+  
+  <!-- Connections -->
+  <line x1="150" y1="250" x2="400" y2="130" stroke="#718096" stroke-width="2"/>
+  <line x1="400" y1="250" x2="400" y2="130" stroke="#718096" stroke-width="2"/>
+  <line x1="650" y1="250" x2="400" y2="130" stroke="#718096" stroke-width="2"/>
+  
+  <!-- Data Flow Labels -->
+  <text x="250" y="180" text-anchor="middle" font-family="Arial" font-size="12" fill="#4a5568">
+    Encrypted Data
+  </text>
+</svg>
