@@ -27,9 +27,7 @@
 - **12:00 - 12:30**: Lunch Break (30 min)
 
 ## Afternoon Session
-- **12:30 - 14:00**: Lab 3: Prometheus Hands-On (continued, 1 hour 30 min)
-- **14:00 - 14:20**: Introduction to Grafana (20 min)
-- **14:20 - 15:45**: Lab 4: Visualizing Data with Grafana (1 hour 25 min)
+- **12:30 - 15:45**: Lab 3: Prometheus Hands-On (continued, 1 hour 30 min)
 
 ## Wrap-up
 - **15:45 - 16:00**: Q&A and Wrap-up (15 min)
@@ -39,7 +37,39 @@
 
 ## Day 3: November 9, 10:00-16:00
 
+# **Day 3: November 9, 10:00-16:00**
 
+## **Agenda**
+
+### **Morning Session**
+- **10:00 - 10:30**: **Introduction to Grafana**  
+  Overview of Grafana's features, capabilities, and how it integrates with various data sources.
+  
+- **10:30 - 11:30**: **Lab 4: Grafana Visualization**  
+  Hands-on lab to create visualizations using Grafana dashboards.
+
+- **11:30 - 12:30**: **Introduction to the TICK Stack**  
+  Learn about Telegraf, InfluxDB, Chronograf, and Kapacitor for data collection, storage, visualization, and alerting.
+
+---
+
+### **Lunch Break**
+- **12:30 - 13:00**: Lunch Break (30 min)
+
+---
+
+### **Afternoon Session**
+- **13:00 - 14:30**: **Lab 5: Extra Prometheus Lab**  
+  Advanced Prometheus scenarios and extended exercises to deepen understanding.
+
+- **14:30 - 15:45**: **Lab 7: TICK Stack Setup**  
+  Hands-on setup and configuration of the TICK Stack, including data collection and visualization.
+
+---
+
+### **Wrap-up**
+- **15:45 - 16:00**: **Q&A and Wrap-up**  
+  Final discussion, review of labs, and addressing remaining questions.
 
 ---
 
