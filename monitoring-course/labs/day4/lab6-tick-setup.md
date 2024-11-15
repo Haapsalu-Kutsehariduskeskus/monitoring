@@ -1,5 +1,5 @@
 Resources
-Repo: Lab code and configurations: https://github.com/mashaeg/Observability_2024/tree/tick
+Repo: Lab code and configurations: https://github.com/mashaeg/Observability_2024/tree/tickstack
 
 Lecture: Detailed lecture notes: https://docs.google.com/document/d/19U5QH_CjDnEa595fIE4a3gCnNpRlUfFPmtVXW7n63_A/edit?usp=sharing
 

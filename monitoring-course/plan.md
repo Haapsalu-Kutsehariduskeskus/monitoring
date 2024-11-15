@@ -1,7 +1,5 @@
 # Monitoring Course Plan 2024
 
-# Monitoring Course Plan 2024
-
 ## Day 1: October 19, 10:00-15:45
 
 - **10:00 - 10:20**: Intro (20 min)
@@ -35,37 +33,20 @@
 
 ---
 
-## Day 3: November 9, 10:00-16:00
-
-# **Day 3: November 9, 10:00-16:00**
-
-## **Agenda**
+## Day 3: November 9, 10:00-16:00 
 
 ### **Morning Session**
 - **10:00 - 10:30**: **Introduction to Grafana**  
   Overview of Grafana's features, capabilities, and how it integrates with various data sources.
-  
-- **10:30 - 11:30**: **Lab 4: Grafana Visualization**  
+- **10:30 - 12:30**: **Lab 4: Grafana Visualization**  
   Hands-on lab to create visualizations using Grafana dashboards.
-
-- **11:30 - 12:30**: **Introduction to the TICK Stack**  
-  Learn about Telegraf, InfluxDB, Chronograf, and Kapacitor for data collection, storage, visualization, and alerting.
-
----
 
 ### **Lunch Break**
 - **12:30 - 13:00**: Lunch Break (30 min)
 
----
-
 ### **Afternoon Session**
-- **13:00 - 14:30**: **Lab 5: Extra Prometheus Lab**  
+- **13:00 - 15:45**: **Lab 5: Extra Prometheus Lab**  
   Advanced Prometheus scenarios and extended exercises to deepen understanding.
-
-- **14:30 - 15:45**: **Lab 7: TICK Stack Setup**  
-  Hands-on setup and configuration of the TICK Stack, including data collection and visualization.
-
----
 
 ### **Wrap-up**
 - **15:45 - 16:00**: **Q&A and Wrap-up**  
@@ -75,3 +56,22 @@
 
 ## Day 4: November 16, 10:00-16:00
 
+### **Morning Session**
+- **10:00 - 10:30**: **Introduction to the TICK Stack**  
+  Learn about Telegraf, InfluxDB, Chronograf, and Kapacitor for data collection, storage, visualization, and alerting.
+- **10:30 - 12:30**: **Lab 6: TICK Stack**  
+  Hands-on lab to create visualizations using the TICK Stack components.
+
+### **Lunch Break**
+- **12:30 - 13:00**: Lunch Break (30 min)
+
+
+### **Afternoon Session**
+- **13:00 - 13:30**: **Introduction to Elasticsearch**  
+  Overview of Elasticsearch and its role in storing and querying log and metric data.
+- **13:30 - 15:00**: **Lab 7: Elasticsearch**  
+  Practical exercises on Elasticsearch, covering data indexing, searching, and aggregations.
+  
+### **Wrap-up**
+- **15:00 - 16:00**: **Introduction to Loki, OpenSearch, OpenTelemetry & Finalizing Observability**  
+  Overview of Loki, OpenSearch, and OpenTelemetry, and how they fit into the observability stack. Wrap-up discussion on observability tools and techniques.
