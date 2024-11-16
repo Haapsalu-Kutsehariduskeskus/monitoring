@@ -6,6 +6,8 @@ Lecture: Detailed lecture notes:
 Elasticsearch, Kibana
 https://docs.google.com/document/d/1N1fbe3jgr0w0UFjmR1yFv2KIP_f74ORvjynKhd5oY1Y/edit?usp=sharing
 
+https://docs.google.com/document/d/1A81co4PYeWk4Nn8bOkC8fgBZGPmanfT-aU5eQ86IgEg/edit?usp=sharing
+
 Beats:
 https://docs.google.com/document/d/1-u9ZSYr6-YosuKTre8tRHFTzEMOjXmHqSxIj7ZIRf-k/edit?usp=sharing
 
