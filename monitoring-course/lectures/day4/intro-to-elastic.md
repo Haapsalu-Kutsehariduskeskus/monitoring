@@ -7,6 +7,7 @@
   - [Logstash](#logstash)
   - [Beats](#beats)
   - [Vector](#vector)
+  - [Kibana](#kibana)
 - [Arhitektuur ja Andmevood](#arhitektuur-ja-andmevood)
 - [Kasutusjuhud](#kasutusjuhud)
 - [Seadistamine](#seadistamine)
@@ -54,11 +55,15 @@ Vector on moodne andmete kogumise ja töötlemise tööriist:
 ## Täiendavad Komponendid ja Tööriistad
 
 ### Kibana
-- Visualiseerimise ja andmete uurimise platvorm
-- Interaktiivsed dashboardid
-- Logide reaalajas jälgimine
-- Graafikud ja diagrammid
-- Täiustatud analüütika võimalused
+
+Kibana on visuaalne liides, mis töötab koos Elasticsearchiga ja pakub mitmekülselt andmete uurimise ja analüütika võimalusi:
+
+- **Interaktiivsed Dashboardid**
+- **Visualisatsioonid**
+- **Päringute Jälgimine ja Otsing**: Kibana Query Language (KQL) või Lucene päringukeelt.
+- **Logide Reaalajas Jälgimine**
+- **Analüütika**
+- **Alerting ja Teavitused**
 
 ```mermaid
 graph LR
