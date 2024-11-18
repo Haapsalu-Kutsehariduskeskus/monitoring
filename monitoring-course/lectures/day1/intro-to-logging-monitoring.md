@@ -1,1 +1,0 @@
-- **Main Lecture is here:** [Introduction to Logging, Monitoring, and Observability](https://docs.google.com/document/d/1ouKj2N45pMgsiegNpfxtMghc53vL_yxw23C4z55cm70/edit?usp=sharing).

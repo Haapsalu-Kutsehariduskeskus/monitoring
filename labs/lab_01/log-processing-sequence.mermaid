@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant App as Application
+    participant Syslog as Local Syslog
+    participant Remote as Remote Logger
+    participant Storage as Log Storage
+    participant Rotation as Log Rotation
+    
+    App->>Syslog: Generate Log Entry
+    Note over App,Syslog: Priority & Facility Tags Added
+    
+    Syslog->>Remote: Forward Log (UDP/514)
+    Note over Syslog,Remote: Timestamp & Host Info Added
+    
+    Remote->>Storage: Sort by Type
+    Note over Remote,Storage: Auth, System, or App Category
+    
+    Storage->>Rotation: Check Size/Time
+    alt Rotation Needed
+        Rotation->>Storage: Rotate & Compress
+        Note over Storage,Rotation: Keep Last 5 Versions
+    end

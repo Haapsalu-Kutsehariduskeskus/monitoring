@@ -1,0 +1,25 @@
+stateDiagram-v2
+    [*] --> Generated: Application/System creates log
+    Generated --> Processed: rsyslog processes
+    Processed --> Forwarded: Send to remote server
+    Processed --> LocalStorage: Store locally
+    
+    LocalStorage --> Rotated: Size/time trigger
+    Forwarded --> RemoteStorage: Store on log server
+    RemoteStorage --> Analyzed: Real-time analysis
+    RemoteStorage --> Rotated: Size/time trigger
+    
+    Rotated --> Compressed: Compress old logs
+    Compressed --> Archived: Move to long-term storage
+    Archived --> [*]
+    
+    state Processed {
+        [*] --> AddTimestamp
+        AddTimestamp --> AddHostInfo
+        AddHostInfo --> AddPriority
+        AddPriority --> [*]
+    }
+    
+    note right of Generated: Initial log creation
+    note right of Processed: Log enrichment
+    note right of Archived: Long-term retention

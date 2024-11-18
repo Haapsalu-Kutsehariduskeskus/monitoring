@@ -1,0 +1,25 @@
+flowchart TD
+    subgraph Client["Client VM (VM2)"]
+        A[Log Generator] --> B[Local rsyslog]
+        C[System Events] --> B
+        D[Application Logs] --> B
+        E[Audit Logs] --> B
+    end
+
+    subgraph Server["Log Server (VM1)"]
+        F[rsyslog Receiver\nPort 514] --> G[Log Processor]
+        G --> H[/var/log/clients/auth/]
+        G --> I[/var/log/clients/system/]
+        G --> J[/var/log/clients/app/]
+        
+        H --> K[Log Rotation]
+        I --> K
+        J --> K
+        
+        K --> L[Compressed Archives]
+    end
+
+    B -->|Forward Logs\nUDP/514| F
+    
+    style Client fill:#f9f,stroke:#333,stroke-width:4px
+    style Server fill:#bbf,stroke:#333,stroke-width:4px
