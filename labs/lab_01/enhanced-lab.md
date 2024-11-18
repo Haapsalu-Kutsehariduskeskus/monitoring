@@ -98,27 +98,43 @@ And here's our user permissions structure:
 ```mermaid
 flowchart TD
     subgraph Permissions["Logging User Permissions"]
-        A[loguser] --> B[Primary Group:\nloggroup]
-        A --> C[Secondary Groups]
+        direction TB
+        A[loguser]
+        B[Primary Group: loggroup]
+        C[Secondary Groups]
+        D[adm]
+        E[syslog]
+        F[Permissions]
+        G["Client Logs\n/var/log/clients\n(rx)"]
+        H["Log Files\n/var/log/clients/*\n(rw)"]
+        I["Config\n/etc/rsyslog.d\n(r)"]
         
-        C --> D[adm]
-        C --> E[syslog]
-        
-        B --> F[Permissions]
-        F --> G[/var/log/clients\nr-x]
-        F --> H[/var/log/clients/*\nrw-]
-        F --> I[/etc/rsyslog.d\nr--]
+        A --> B
+        A --> C
+        C --> D
+        C --> E
+        B --> F
+        F --> G
+        F --> H
+        F --> I
     end
 
-    subgraph Actions["Allowed Actions"]
-        J[Read Logs] --> K[Write New Logs]
-        J --> L[Archive Logs]
-        K --> M[Rotate Logs]
-        L --> N[Compress Logs]
+    subgraph Actions["Allowed Operations"]
+        direction TB
+        J["Read Logs"] 
+        K["Write Logs"]
+        L["Archive"]
+        M["Rotate"]
+        
+        J --> K
+        J --> L
+        K --> M
     end
 
-    style Permissions fill:#f9f,stroke:#333,stroke-width:2px
-    style Actions fill:#bbf,stroke:#333,stroke-width:2px
+    classDef default fill:#f9f,stroke:#333,stroke-width:1px
+    classDef actions fill:#bbf,stroke:#333,stroke-width:1px
+    class A,B,C,D,E,F,G,H,I default
+    class J,K,L,M actions
 ```
 
 Understanding these flows will help you better grasp the practical exercises that follow.
