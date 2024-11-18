@@ -176,7 +176,49 @@ Both VMs should run either Ubuntu 22.04 LTS or AlmaLinux 9. Choose one distribut
 
 #### 2. Security Setup: Creating a Dedicated Logging User
 
-[Diagram: Logging User Permissions Structure]
+The diagram below shows the permissions structure we'll implement for our logging user:
+
+```mermaid
+flowchart TD
+    subgraph Permissions["Logging User Permissions"]
+        direction TB
+        A[loguser]
+        B[Primary Group: loggroup]
+        C[Secondary Groups]
+        D[adm]
+        E[syslog]
+        F[Permissions]
+        G["Client Logs\n/var/log/clients\n(rx)"]
+        H["Log Files\n/var/log/clients/*\n(rw)"]
+        I["Config\n/etc/rsyslog.d\n(r)"]
+        
+        A --> B
+        A --> C
+        C --> D
+        C --> E
+        B --> F
+        F --> G
+        F --> H
+        F --> I
+    end
+
+    subgraph Actions["Allowed Operations"]
+        direction TB
+        J["Read Logs"] 
+        K["Write Logs"]
+        L["Archive"]
+        M["Rotate"]
+        
+        J --> K
+        J --> L
+        K --> M
+    end
+
+    classDef default fill:#f9f,stroke:#333,stroke-width:1px
+    classDef actions fill:#bbf,stroke:#333,stroke-width:1px
+    class A,B,C,D,E,F,G,H,I default
+    class J,K,L,M actions
+```
 
 Let's create a dedicated logging user with proper permissions. This is crucial for security:
 
@@ -680,20 +722,62 @@ Common issues you might encounter and how to solve them:
    - Disk I/O
    - Network bottlenecks
 
-## Lab Submission Requirements
+### Lab Submission Requirements
 
-### 1. Documentation File
-Create a Markdown file named `submission.md` with the following structure:
+You can submit your work in one of two ways:
+
+1. **GitHub Repository** (Preferred Method)
+   - Create a public GitHub repository with all your work
+   - Structure your repository like this:
+   ```
+   lab_01/
+   ├── submission.md          # Main documentation
+   ├── scripts/              # All your scripts
+   │   ├── log_generator.sh
+   │   ├── log_dashboard.sh
+   │   └── audit_logs.sh
+   ├── configs/              # Configuration files
+   │   ├── rsyslog.d/
+   │   └── logrotate.d/
+   └── system_info.txt       # System information
+   ```
+   - Submit the repository URL in Google Classroom
+   - Ensure your repository is public and contains all required files
+   - Include working Mermaid diagrams in your submission.md (as shown in the screenshot above)
+
+2. **Direct Archive Submission**
+   If you cannot use GitHub, you can submit a tar archive as described below:
+   ```bash
+   # Create submission package
+   tar -czf lab_submission_$(date +%Y%m%d).tar.gz \
+       submission.md \
+       scripts.tar.gz \
+       configs.tar.gz \
+       system_info.txt
+   
+   # Submit this file in Google Classroom
+   ```
+
+### Documentation File (submission.md)
+
+Your submission.md should look like this:
 
 ```markdown
 # Linux Logging Lab Submission
 Student Name: [Your Name]
+Repository URL: [If submitting via GitHub]
 Date: [Submission Date]
 
 ## Environment Setup
 - VM1 IP: [IP Address]
 - VM2 IP: [IP Address]
 - OS Versions: [Specify for both VMs]
+
+## Implementation Verification
+[Rest of the documentation as specified earlier...]
+```
+
+As shown in the diagram above, we need to first set up proper user permissions. Let's create a dedicated logging user with proper permissions. This is crucial for security:
 
 ## Implementation Verification
 
@@ -892,4 +976,4 @@ Before submitting, verify:
    timeout 5m ~/log_analyzer.sh
    ```
 
-Submit your files to the Google Classroom.
+Submit your lab_submission_YYYYMMDD.tar.gz file to the designated submission system.
