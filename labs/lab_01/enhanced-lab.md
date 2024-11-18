@@ -822,56 +822,76 @@ Create your submission.md following this template:
 
 Submit your work following one of the methods above in Google Classroom.
 
-As shown in the diagram above, we need to first set up proper user permissions. Let's create a dedicated logging user with proper permissions. This is crucial for security:
-
 ## Implementation Verification
 
 ### 1. Logging User Setup
-\`\`\`bash
-# Output of:
+```bash
+# Show user and group information
 id loguser
+
+# Show log directory permissions
 ls -la /var/log/clients
+
+# Show rsyslog configuration permissions
 getfacl /etc/rsyslog.conf
-\`\`\`
+```
 
 ### 2. Log Generation and Forwarding
-\`\`\`bash
-# Output showing logs being generated on VM2:
+```bash
+# On VM2 - Show logs being generated
 tail -n 5 /var/log/syslog
 
-# Output showing logs received on VM1:
+# On VM1 - Show logs being received
 tail -n 5 /var/log/clients/app/catch-all.log
-\`\`\`
+```
 
 ### 3. Log Rotation Configuration
-\`\`\`bash
-# Show your logrotate configuration:
+```bash
+# Display logrotate configuration
 cat /etc/logrotate.d/high-volume
 
-# Show rotated logs:
+# Show current log files including rotated ones
 ls -la /var/log/clients/app/
-\`\`\`
+```
 
 ### 4. Security Implementation
-\`\`\`bash
-# Show audit rules:
+```bash
+# Display current audit rules
 sudo auditctl -l
 
-# Show any detected security events:
+# Show recent security events
 sudo ausearch -k log_security | tail -n 5
-\`\`\`
+```
 
 ### 5. Log Analysis Dashboard
-[Include screenshot or output from your log analyzer]
+Include a screenshot or output of your log analyzer showing:
+- Real-time log analysis
+- Error/Warning counts
+- System statistics
+- Security alerts
 
-## Challenges Encountered
+### Challenges Encountered
 1. [Describe any issues you faced]
-2. [How you resolved them]
+   - How you identified the problem
+   - Steps taken to resolve it
 
-## Bonus Implementations
-- [Any extra features you added]
-- [Additional security measures]
-- [Performance improvements]
+2. [Additional challenges]
+   - Impact on implementation
+   - Solution approach
+   - Lessons learned
+
+### Bonus Implementations
+* **Extra Features**
+  - [Describe any additional functionality]
+  - [Include relevant commands or screenshots]
+
+* **Security Enhancements**
+  - [Additional security measures implemented]
+  - [How they improve the system]
+
+* **Performance Optimizations**
+  - [Performance improvements made]
+  - [Metrics showing the impact]
 ```
 
 ### 2. Script Collection
