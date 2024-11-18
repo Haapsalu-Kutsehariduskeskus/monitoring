@@ -5,23 +5,121 @@
 
 First, let's understand the architecture we'll be building. This diagram shows how logs flow through our system:
 
-{{< include "logging-architecture.mermaid" >}}
+```mermaid
+flowchart TD
+    subgraph Client["Client VM (VM2)"]
+        A[Log Generator] --> B[Local rsyslog]
+        C[System Events] --> B
+        D[Application Logs] --> B
+        E[Audit Logs] --> B
+    end
+
+    subgraph Server["Log Server (VM1)"]
+        F[rsyslog Receiver\nPort 514] --> G[Log Processor]
+        G --> H[/var/log/clients/auth/]
+        G --> I[/var/log/clients/system/]
+        G --> J[/var/log/clients/app/]
+        
+        H --> K[Log Rotation]
+        I --> K
+        J --> K
+        
+        K --> L[Compressed Archives]
+    end
+
+    B -->|Forward Logs\nUDP/514| F
+    
+    style Client fill:#f9f,stroke:#333,stroke-width:4px
+    style Server fill:#bbf,stroke:#333,stroke-width:4px
+```
 
 The above diagram shows how logs are generated, processed, and stored in our two-VM setup. Notice how all logs from VM2 are forwarded to VM1 for centralized processing and storage.
 
 The following sequence diagram shows how individual log entries are processed:
 
-{{< include "log-processing-sequence.mermaid" >}}
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant Syslog as Local Syslog
+    participant Remote as Remote Logger
+    participant Storage as Log Storage
+    participant Rotation as Log Rotation
+    
+    App->>Syslog: Generate Log Entry
+    Note over App,Syslog: Priority & Facility Tags Added
+    
+    Syslog->>Remote: Forward Log (UDP/514)
+    Note over Syslog,Remote: Timestamp & Host Info Added
+    
+    Remote->>Storage: Sort by Type
+    Note over Remote,Storage: Auth, System, or App Category
+    
+    Storage->>Rotation: Check Size/Time
+    alt Rotation Needed
+        Rotation->>Storage: Rotate & Compress
+        Note over Storage,Rotation: Keep Last 5 Versions
+    end
+```
 
 This sequence shows the journey of each log entry from creation to storage.
 
 Finally, here's a state diagram showing all possible states a log entry can be in:
 
-{{< include "log-states.mermaid" >}}
+```mermaid
+stateDiagram-v2
+    [*] --> Generated: Application/System creates log
+    Generated --> Processed: rsyslog processes
+    Processed --> Forwarded: Send to remote server
+    Processed --> LocalStorage: Store locally
+    
+    LocalStorage --> Rotated: Size/time trigger
+    Forwarded --> RemoteStorage: Store on log server
+    RemoteStorage --> Analyzed: Real-time analysis
+    RemoteStorage --> Rotated: Size/time trigger
+    
+    Rotated --> Compressed: Compress old logs
+    Compressed --> Archived: Move to long-term storage
+    Archived --> [*]
+    
+    state Processed {
+        [*] --> AddTimestamp
+        AddTimestamp --> AddHostInfo
+        AddHostInfo --> AddPriority
+        AddPriority --> [*]
+    }
+    
+    note right of Generated: Initial log creation
+    note right of Processed: Log enrichment
+    note right of Archived: Long-term retention
+```
 
 And here's our user permissions structure:
 
-{{< include "user-permissions.mermaid" >}}
+```mermaid
+flowchart TD
+    subgraph Permissions["Logging User Permissions"]
+        A[loguser] --> B[Primary Group:\nloggroup]
+        A --> C[Secondary Groups]
+        
+        C --> D[adm]
+        C --> E[syslog]
+        
+        B --> F[Permissions]
+        F --> G[/var/log/clients\nr-x]
+        F --> H[/var/log/clients/*\nrw-]
+        F --> I[/etc/rsyslog.d\nr--]
+    end
+
+    subgraph Actions["Allowed Actions"]
+        J[Read Logs] --> K[Write New Logs]
+        J --> L[Archive Logs]
+        K --> M[Rotate Logs]
+        L --> N[Compress Logs]
+    end
+
+    style Permissions fill:#f9f,stroke:#333,stroke-width:2px
+    style Actions fill:#bbf,stroke:#333,stroke-width:2px
+```
 
 Understanding these flows will help you better grasp the practical exercises that follow.
 Welcome to this immersive hands-on workshop on Linux logging systems! In this lab, you'll build a complete logging infrastructure from the ground up, learning how Linux logging works by doing. Instead of just configuring components, you'll understand why each piece matters and how they work together.
@@ -778,4 +876,4 @@ Before submitting, verify:
    timeout 5m ~/log_analyzer.sh
    ```
 
-Submit your lab_submission_YYYYMMDD.tar.gz file to the designated submission system.
+Submit your files to the Google Classroom.
