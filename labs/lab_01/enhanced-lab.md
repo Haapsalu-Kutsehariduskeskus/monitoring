@@ -722,38 +722,76 @@ Common issues you might encounter and how to solve them:
    - Disk I/O
    - Network bottlenecks
 
-### Lab Submission Requirements
+# Submission Guide
 
-You can submit your work in one of two ways:
+You can submit your work in **one** of these two ways:
 
-#### 1. GitHub Repository (Preferred Method)
-- Create a public GitHub repository with all your work
-- Structure your repository like this:
+## 1. GitHub Repository (Preferred)
+1. Create a public GitHub repository with following structure:
 ```
 lab_01/
-├── submission.md          # Main documentation
-├── scripts/              # All your scripts
+├── submission.md          # Your main documentation (including Mermaid diagrams)
+├── scripts/              # Your scripts
 │   ├── log_generator.sh
 │   ├── log_dashboard.sh
 │   └── audit_logs.sh
-├── configs/              # Configuration files
+├── configs/              # Your configurations
 │   ├── rsyslog.d/
 │   └── logrotate.d/
 └── system_info.txt       # System information
 ```
-- Submit the repository URL in Google Classroom
-- Ensure your repository is public
-- Include working Mermaid diagrams in your submission.md
 
-#### 2. Direct Archive Submission
-If you cannot use GitHub, create and submit a tar archive:
+2. For Mermaid diagrams in submission.md:
+   - Copy these sections from the lab instructions into your submission.md:
+   ```markdown
+   ## Architecture Diagram
+   ```mermaid
+   flowchart TD
+       subgraph Client["Client VM (VM2)"]
+           A[Log Generator] --> B[Local rsyslog]
+           ...
+   ```
+   - Make sure to include all four diagrams:
+     - Logging Architecture Overview
+     - Log Processing Sequence
+     - Log Entry States
+     - User Permissions Structure
+
+3. Submit your repository URL in Google Classroom
+
+## 2. Archive File
+1. Create and package your files:
 ```bash
-tar -czf lab_submission_$(date +%Y%m%d).tar.gz \
-    submission.md \
-    scripts.tar.gz \
-    configs.tar.gz \
-    system_info.txt
+# Create submission directory
+mkdir -p ~/lab_submission/{scripts,configs}
+
+# Copy your files
+cp ~/log_*.sh lab_submission/scripts/
+sudo cp -r /etc/rsyslog.d/custom* lab_submission/configs/
+sudo cp -r /etc/logrotate.d/high-volume lab_submission/configs/
+
+# Generate system info
+{
+    echo "=== System Information ==="
+    uname -a
+    echo -e "\n=== Network Configuration ==="
+    ip addr show
+    echo -e "\n=== Package Versions ==="
+    dpkg -l | grep -E 'rsyslog|auditd|logrotate'
+} > lab_submission/system_info.txt
+
+# Create archive
+cd ~/
+tar -czf lab_submission_$(date +%Y%m%d).tar.gz lab_submission/
 ```
+2. Submit the generated .tar.gz file in Google Classroom
+
+Both submission methods must include:
+- Complete documentation (submission.md)
+- All Mermaid diagrams (copy from lab instructions)
+- All scripts and configurations
+- System information
+- Dashboard screenshots/output
 
 #### Required Documentation Structure (submission.md)
 
