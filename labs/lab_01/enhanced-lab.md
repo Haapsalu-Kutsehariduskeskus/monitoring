@@ -726,56 +726,101 @@ Common issues you might encounter and how to solve them:
 
 You can submit your work in one of two ways:
 
-1. **GitHub Repository** (Preferred Method)
-   - Create a public GitHub repository with all your work
-   - Structure your repository like this:
-   ```
-   lab_01/
-   ├── submission.md          # Main documentation
-   ├── scripts/              # All your scripts
-   │   ├── log_generator.sh
-   │   ├── log_dashboard.sh
-   │   └── audit_logs.sh
-   ├── configs/              # Configuration files
-   │   ├── rsyslog.d/
-   │   └── logrotate.d/
-   └── system_info.txt       # System information
-   ```
-   - Submit the repository URL in Google Classroom
-   - Ensure your repository is public and contains all required files
-   - Include working Mermaid diagrams in your submission.md (as shown in the screenshot above)
+#### 1. GitHub Repository (Preferred Method)
+- Create a public GitHub repository with all your work
+- Structure your repository like this:
+```
+lab_01/
+├── submission.md          # Main documentation
+├── scripts/              # All your scripts
+│   ├── log_generator.sh
+│   ├── log_dashboard.sh
+│   └── audit_logs.sh
+├── configs/              # Configuration files
+│   ├── rsyslog.d/
+│   └── logrotate.d/
+└── system_info.txt       # System information
+```
+- Submit the repository URL in Google Classroom
+- Ensure your repository is public
+- Include working Mermaid diagrams in your submission.md
 
-2. **Direct Archive Submission**
-   If you cannot use GitHub, you can submit a tar archive as described below:
-   ```bash
-   # Create submission package
-   tar -czf lab_submission_$(date +%Y%m%d).tar.gz \
-       submission.md \
-       scripts.tar.gz \
-       configs.tar.gz \
-       system_info.txt
-   
-   # Submit this file in Google Classroom
-   ```
+#### 2. Direct Archive Submission
+If you cannot use GitHub, create and submit a tar archive:
+```bash
+tar -czf lab_submission_$(date +%Y%m%d).tar.gz \
+    submission.md \
+    scripts.tar.gz \
+    configs.tar.gz \
+    system_info.txt
+```
 
-### Documentation File (submission.md)
+#### Required Documentation Structure (submission.md)
 
-Your submission.md should look like this:
+Create your submission.md following this template:
 
 ```markdown
-# Linux Logging Lab Submission
-Student Name: [Your Name]
-Repository URL: [If submitting via GitHub]
-Date: [Submission Date]
+# Lab 01: Linux Logging Implementation
+## Student Information
+- **Name:** [Your Name]
+- **Repository URL:** [Your GitHub Repository URL]
+- **Date:** [Submission Date]
 
 ## Environment Setup
-- VM1 IP: [IP Address]
-- VM2 IP: [IP Address]
-- OS Versions: [Specify for both VMs]
+### VM Configuration
+- **VM1 (Log Server)**
+  - IP Address: [IP]
+  - OS Version: [e.g., Ubuntu 22.04]
+  - Role: Central Log Server
 
-## Implementation Verification
-[Rest of the documentation as specified earlier...]
+- **VM2 (Client)**
+  - IP Address: [IP]
+  - OS Version: [e.g., Ubuntu 22.04]
+  - Role: Log Generator
+
+## Implementation Details
+### 1. Security Setup
+- [ ] Created loguser and loggroup
+- [ ] Configured proper permissions
+- [ ] Verified access controls
+
+### 2. Logging Configuration
+- [ ] Set up rsyslog forwarding
+- [ ] Configured log rotation
+- [ ] Implemented audit rules
+
+### 3. Dashboard Implementation
+- [ ] Created monitoring dashboard
+- [ ] Implemented real-time analysis
+- [ ] Added visualization features
+
+## Testing Results
+### Security Tests
+\`\`\`bash
+# Output of permission verification
+[Your command output here]
+\`\`\`
+
+### Log Generation Tests
+\`\`\`bash
+# Output showing logs being generated
+[Your command output here]
+\`\`\`
+
+### Dashboard Output
+[Screenshot or output of your dashboard]
+
+## Challenges and Solutions
+1. [Describe any challenges you faced]
+2. [How you solved them]
+
+## Additional Implementations
+- [Any extra features you added]
+- [Performance improvements]
+- [Security enhancements]
 ```
+
+Submit your work following one of the methods above in Google Classroom.
 
 As shown in the diagram above, we need to first set up proper user permissions. Let's create a dedicated logging user with proper permissions. This is crucial for security:
 
