@@ -153,6 +153,8 @@ By the end of this lab, you will be able to:
 - 2-4 hours of focused time
 - Coffee ☕ (optional but recommended!)
 
+--------------------------------
+
 ## Lab Environment Setup
 
 ### Virtual Machine Requirements
@@ -220,6 +222,42 @@ flowchart TD
     class J,K,L,M actions
 ```
 
+### Dependency Installation
+
+1. On both VMs:
+
+For Ubuntu/Debian:
+```bash
+sudo apt update
+sudo apt install rsyslog logrotate acl syslog-ng
+```
+
+For RHEL/AlmaLinux:
+```bash
+sudo dnf update
+sudo dnf install rsyslog logrotate acl syslog-ng
+```
+
+2. Verify installations:
+```bash
+rsyslogd -v
+logrotate --version
+```
+
+3. Enable services:
+```bash
+sudo systemctl enable rsyslog
+sudo systemctl start rsyslog
+sudo systemctl status rsyslog
+```
+
+4. Test rsyslog:
+```bash
+logger "Test log message"
+tail /var/log/syslog  # Ubuntu
+tail /var/log/messages  # AlmaLinux
+```
+
 Let's create a dedicated logging user with proper permissions. This is crucial for security:
 
 ```bash
@@ -260,6 +298,8 @@ Key security features of this setup:
 - Restricted permissions using ACLs
 - Separate group for log management
 - Minimal necessary permissions following principle of least privilege
+
+--------------------------------
 
 ### Story-Driven Scenario
 You're a system administrator at TechCorp, a growing startup. After several minor incidents where important logs were lost, management has tasked you with building a robust logging infrastructure. This lab simulates that real-world scenario.
@@ -444,7 +484,9 @@ StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
+```
 
+```bash
 # Enable and start the service
 sudo systemctl daemon-reload
 sudo systemctl enable log-dashboard
@@ -722,6 +764,7 @@ Common issues you might encounter and how to solve them:
    - Disk I/O
    - Network bottlenecks
 
+--------------------------------
 # Submission Guide
 
 You can submit your work in **one** of these two ways:
@@ -816,7 +859,10 @@ Create your submission.md following this template:
   - OS Version: [e.g., Ubuntu 22.04]
   - Role: Log Generator
 
+--------------------------------
+
 ## Implementation Details
+
 ### 1. Security Setup
 - [ ] Created loguser and loggroup
 - [ ] Configured proper permissions
@@ -832,7 +878,9 @@ Create your submission.md following this template:
 - [ ] Implemented real-time analysis
 - [ ] Added visualization features
 
+--------------------------------
 ## Testing Results
+
 ### Security Tests
 \`\`\`bash
 # Output of permission verification
@@ -859,6 +907,8 @@ Create your submission.md following this template:
 ```
 
 Submit your work following one of the methods above in Google Classroom.
+
+--------------------------------
 
 ## Implementation Verification
 
