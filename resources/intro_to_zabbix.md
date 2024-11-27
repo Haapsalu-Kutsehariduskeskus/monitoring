@@ -1,77 +1,36 @@
 # Sissejuhatus Zabbix'i
 
-## Ülevaade
-Zabbix on võimas avatud lähtekoodiga tööriist rakenduste, võrkude ja serverite reaalajas jälgimiseks. See aitab IT-meeskondadel tagada süsteemide optimaalse toimimise ja hoiatab neid võimalike probleemide eest enne, kui need kasutajaid mõjutavad.
+Zabbix on avatud lähtekoodiga jälgimistarkvara, mis aitab IT-meeskondadel tagada rakenduste, serverite ja võrkude katkematu toimimise. See tööriist pakub reaalajas monitooringut ja aitab tuvastada probleeme enne, kui need kasutajate tööd segavad. Zabbix'i lõi Alexei Vladishev 1998. aastal ja 2001. aastal avaldati see avatud lähtekoodiga projektina, mis tähendab, et seda saab kasutada tasuta.
+
+## Mis on Zabbix?
+
+Zabbix on väärtuslik tööriist IT-infrastruktuuri jälgimiseks, pakkudes põhjalikku ülevaadet võrkude, serverite ja rakenduste tööseisundist. Zabbix võimaldab monitoorida erinevaid ressursse, sealhulgas protsessori kasutust, mälu olekut, kettaruumi, võrguliiklust ja palju muud. Seda kasutatakse laialdaselt, kuna see on paindlik, skaleeritav ja toetab suurt hulka integreerimisvõimalusi.
+
+### Põhiomadused
+- **Avatud lähtekoodiga ja tasuta** – Zabbix'i saab kasutada ilma litsentsitasudeta, mis teeb selle sobivaks nii suurtele ettevõtetele kui ka väikestele organisatsioonidele.
+- **Reaalajas monitooring ja analüüs** – Zabbix pakub võimalust monitoorida sadu meetrikaid erinevatest seadmetest ja rakendustest, pakkudes kohest ülevaadet probleemidest.
+- **Veebiliides visualiseerimiseks** – tsentraliseeritud veebiliidese kaudu saab visualiseerida kogutud andmeid, luua graafikuid ja aruandeid.
 
 ### Üldine Võrgu Topoloogia
 ![Zabbix Network Topology](./zabbix-network-topology.svg)
 
-Topoloogia seadistamine sõltub keskkonna suurusest:
-
-**Väike Keskkond** (kuni 100 seadet):
-```ini
-# zabbix_server.conf
-StartPollers=5
-CacheSize=8M
-HistoryCacheSize=16M
-```
-
-**Keskmine Keskkond** (100-1000 seadet):
-```ini
-StartPollers=20
-CacheSize=256M
-HistoryCacheSize=128M
-```
-
-**Suur Keskkond** (1000+ seadet):
-```ini
-StartPollers=100
-CacheSize=1G
-HistoryCacheSize=512M
-```
-
 ## Miks Me Vajame Rakenduste Jälgimist?
 
-### 1. Informatsiooni Kogumine
-Rakendused genereerivad ulatuslikke andmeid, mida on vaja jõudluse analüüsiks ja äri parendamiseks.
+### Informatsiooni Kogumine
+Rakenduste ja infrastruktuuri jälgimine on kriitiline äriprotsesside tagamiseks. Andmete kogumine aitab parandada äritulemusi ja efektiivsust, pakkudes olulist teavet selle kohta, kuidas teie IT-süsteemid toimivad ja millal on vaja sekkuda.
 
 ![Agent Deployment Patterns](./agent-deployment-patterns.svg)
 
-Andmete kogumise seadistamine:
-```bash
-# Active Agent seadistus
-Server=zabbix.company.com
-ServerActive=zabbix.company.com
-Hostname=webserver01
-EnableRemoteCommands=1
-
-# Kohandatud kontrollid
-UserParameter=mysql.status[*],/usr/local/bin/check_mysql.sh $1
-UserParameter=nginx.connections,/usr/local/bin/check_nginx.sh
-```
-
-### 2. Ööpäevaringne Monitooring
-Automatiseeritud tööriistad nagu Zabbix tagavad pideva jälgimise, mida inimestel on käsitsi võimatu saavutada.
+### Ööpäevaringne Monitooring
+Zabbix pakub automaatset jälgimist, mis tähendab, et võite olla kindlad oma võrkude ja rakenduste seisukorra osas 24/7. See on eriti oluline, kuna manuaalne jälgimine ei ole realistlik ja automatiseeritud lahendused pakuvad paremat usaldusväärsust.
 
 ![Distributed Monitoring Setup](./distributed-monitoring-setup.svg)
 
-Hajutatud monitooringu seadistamine:
-```ini
-# Proxy seadistus
-Server=main.zabbix.com
-Hostname=proxy01
-DBName=zabbix_proxy
-ConfigFrequency=3600
-StartPollers=100
-StartPreprocessors=20
-StartDiscoverers=15
-CacheSize=2G
-```
+### Ennetav Teavitamine
+Zabbix toimib kui valvur, teavitades IT-meeskonda võimalikest probleemidest enne, kui need muutuvad kriitilisteks. See võimaldab probleemidele reageerida kiiremini ja minimeerida katkestuste mõju.
 
-### 3. Ennetav Teavitamine (Pre-emptive Alerting)
-Zabbix toimib kui nähtamatu meeskonnaliige, teavitades meeskonda süsteemi probleemidest ennetavalt.
-
-Alertide seadistamine:
+#### Alertide Seadistamine
+Zabbix'is saab seadistada erinevaid teavitusi vastavalt eeldefineeritud tingimustele:
 ```yaml
 Actions:
   - name: "High CPU Usage"
@@ -86,21 +45,16 @@ Actions:
         script: "/usr/local/bin/remediate.sh"
 ```
 
-## Mis on Zabbix?
-Zabbix'i lõi Alexei Vladishev 1998. aastal ja see avaldati avatud lähtekoodiga tööriistana 2001. aastal. Tänu oma ulatuslikele võimalustele ja tugevale kogukonna toele on see nüüd üks populaarsemaid monitooringu tööriistu.
-
-### Põhiomadused (Key Features):
-- Avatud lähtekood ja tasuta
-- Mitme meetrika reaalajas jälgimine
-- Tsentraliseeritud veebipõhine liides andmete visualiseerimiseks
-
 ## Zabbix'i Arhitektuur
+
+Zabbix'i arhitektuur koosneb mitmest põhikomponendist, mis töötavad koos, et pakkuda paindlikku ja skaleeritavat jälgimist.
+
 ![Zabbix Architecture](./zabbix-architecture.svg)
 
-### Peamised Komponendid:
+### Peamised Komponendid
 
-#### 1. Zabbix Server
-Keskne tuum, mis töötleb agentidelt ja proksidelt saadud andmeid
+#### Zabbix Server
+Zabbix server on keskne komponent, mis haldab kõiki kogutud andmeid. See suhtleb agentidega ja salvestab andmeid andmebaasi.
 
 ```ini
 # Server optimaalne seadistus
@@ -113,8 +67,8 @@ CacheSize=2G
 HistoryCacheSize=1G
 ```
 
-#### 2. Web Server
-Majutab Zabbix'i veebiliidest kasutajate interaktsiooniks
+#### Web Server
+Veebiserver majutab Zabbix'i veebiliidest, mis võimaldab kasutajatel seadistusi teha ja kogutud andmeid visualiseerida.
 
 ```apache
 # Apache seadistus
@@ -130,8 +84,8 @@ Majutab Zabbix'i veebiliidest kasutajate interaktsiooniks
 </VirtualHost>
 ```
 
-#### 3. Andmebaas (RDBMS)
-Salvestab konfiguratsiooni, kogutud andmed ja ajaloo
+#### Andmebaas (RDBMS)
+Zabbix vajab andmebaasi, et salvestada kogu kogutud informatsioon. Seda kasutatakse ka kõikide seadistuste hoidmiseks.
 
 ```sql
 -- MySQL optimaalne seadistus
@@ -142,9 +96,10 @@ innodb_flush_log_at_trx_commit = 2
 ```
 
 ### Proxy Arhitektuur
+Zabbix proxy on vahekomponent, mis võimaldab jälgimist hajutada, eriti suuremate võrkude puhul.
+
 ![Proxy Architecture](./zabbix-proxy-architecture.svg)
 
-Proxy serveri seadistamine:
 ```ini
 # Proxy põhiseadistus
 ProxyMode=0
@@ -161,10 +116,10 @@ StartDiscoverers=15
 CacheSize=2G
 ```
 
-### Põhikomponendid:
+### Põhikomponendid
 
-#### 1. Zabbix Agent
-Paigaldatud jälgitavatele serveritele kohalike andmete kogumiseks
+#### Zabbix Agent
+Zabbix agent paigaldatakse serveritele, et koguda kohalikke andmeid. See on võimeline koguma erinevaid meetrikaid nagu protsessori koormus, mälu kasutus jne.
 
 ```ini
 # Agendi seadistus
@@ -177,8 +132,8 @@ UserParameter=mysql.status[*],/usr/local/bin/check_mysql.sh $1
 UserParameter=nginx.connections,/usr/local/bin/check_nginx.sh
 ```
 
-#### 2. Zabbix Proxy
-Kogub andmeid serveri nimel kaugjälgimise seadistuste jaoks
+#### Zabbix Proxy
+Zabbix proxy võimaldab koondada andmeid erinevatest allikatest, lihtsustades suurte võrkude jälgimist ja vähendades Zabbix serveri koormust.
 
 ```ini
 # Proxy seadistus suurele koormusele
@@ -193,8 +148,8 @@ ConfigFrequency=1800
 DataSenderFrequency=1
 ```
 
-#### 3. Zabbix Sender
-Saadab kohandatud andmeid välistest rakendustest
+#### Zabbix Sender
+Zabbix Sender on kasulik andmete saatmiseks kohandatud allikatest, mis ei pruugi olla otseselt Zabbix agendiga seotud.
 
 ```bash
 # Näide kasutamisest
@@ -203,8 +158,9 @@ zabbix_sender -z zabbix.company.com -s "WebServer" -k http.response.time -o 0.85
 
 ## Jälgimise Seadistamine Zabbix'is
 
-### 1. Items
-Määratlege kogutavad meetrikad:
+### Items
+Items on Zabbix'i komponendid, mis määravad, milliseid andmeid kogutakse.
+
 ```yaml
 items:
   - key: system.cpu.load[percpu,avg1]
@@ -218,8 +174,9 @@ items:
     update: 2m
 ```
 
-### 2. Triggers
-Seadke tingimused:
+### Triggers
+Triggers määratlevad, millal peaks Zabbix teavitusi saatma, näiteks kui ressursside kasutus läheb liiga kõrgeks.
+
 ```sql
 -- CPU koormus
 {host:system.cpu.load[percpu,avg1].avg(5m)}>4
@@ -231,8 +188,9 @@ Seadke tingimused:
 {host:vfs.fs.size[/,pfree].last()}<10
 ```
 
-### 3. Templates
-Mallid, mis sisaldavad items'eid, triggers'eid ja graafikuid:
+### Templates
+Template'id võimaldavad seadistuste korduvkasutust, koondades items'eid, triggers'eid ja graafikuid.
+
 ```yaml
 template:
   name: "Linux Server Basic"
@@ -249,8 +207,9 @@ template:
     - Memory Usage
 ```
 
-### 4. Alerts
-Seadistatud vastused päästikutele:
+### Alerts
+Zabbix'is saab seadistada automaatseid tegevusi, mis lähevad käiku, kui mingi triggrer käivitub.
+
 ```yaml
 actions:
   - name: "High CPU Alert"
@@ -266,7 +225,9 @@ actions:
 
 ## Troubleshooting
 
-### 1. Agent Ei Ühendu
+### Agent Ei Ühendu
+Kui agent ei suuda Zabbix serveriga ühenduda, võib probleem olla võrguseadistustes või serveri konfiguratsioonis.
+
 ```bash
 # Kontrolli ühendust
 telnet zabbix.company.com 10050
@@ -278,7 +239,9 @@ tail -f /var/log/zabbix/zabbix_agentd.log
 iptables -L | grep 10050
 ```
 
-### 2. Andmed Ei Jõua Serverisse
+### Andmed Ei Jõua Serverisse
+Kui andmed ei jõua serverisse, võib probleem olla proxy seadistustes või andmebaasis.
+
 ```bash
 # Kontrolli proxy staatust
 zabbix_proxy -R config_cache_reload
@@ -287,7 +250,9 @@ zabbix_proxy -R config_cache_reload
 mysql -e "SELECT count(*) FROM proxy_history" zabbix_proxy
 ```
 
-### 3. Aeglased Päringud
+### Aeglased Päringud
+Kui Zabbix'i päringud on aeglased, võib olla vajalik andmebaasi optimeerimine.
+
 ```sql
 -- Optimeeri andmebaasi
 ANALYZE TABLE history;
@@ -298,9 +263,11 @@ SELECT * FROM information_schema.processlist
 WHERE time > 10;
 ```
 
-## Praktiline Näide
+## Praktiline Näide: Veebiserveri tervise jälgimine
 
-### Veebiserveri tervise jälgimine
+Zabbix võimaldab jälgida veebiserverite töökindlust ja ressursside kasutust, kasutades selleks erinevaid items'eid ja triggers'eid.
+
+![Web Server Monitoring](./web-server-monitoring.svg)
 
 ```yaml
 # Veebiserveri monitooring
@@ -311,11 +278,11 @@ Template:
     - http.response.time[http://example.com]
     - proc.num[apache2]
     - net.tcp.port[,80]
-    
+  
   Triggers:
     - {http.response.time.avg(5m)}>2s
     - {proc.num[apache2].last()}=0
-    
+  
   Actions:
     - Send Email to: webmaster@company.com
     - Restart Apache if down: systemctl restart apache2
@@ -323,22 +290,22 @@ Template:
 
 ## Parimad Praktikad
 
-1. Andmete Säilitamine
+1. **Andmete Säilitamine**
    - History: 7-30 päeva
    - Trends: 365 päeva
-   - Regular housekeeping
+   - Regulaarne hooldus ja kustutamine
 
-2. Jõudluse Seadistamine
-```ini
-StartPollers=100
-StartPreprocessors=50
-CacheSize=1G
-```
+2. **Jõudluse Seadistamine**
+   ```ini
+   StartPollers=100
+   StartPreprocessors=50
+   CacheSize=1G
+   ```
 
-3. Turvalisus
+3. **Turvalisus**
    - Krüpteeritud ühendused
    - Tugev autentimine
-   - Regulaarsed uuendused
+   - Regulaarsed uuendused ja turvapaigad
 
 ## Kasulikud Käsud ja Skriptid
 
@@ -357,6 +324,9 @@ zabbix_server -R housekeeper_execute
 ```
 
 ### Täiendavad Ressursid
-- Zabbix Documentation: [zabbix.com/documentation](https://www.zabbix.com/documentation)
-- Zabbix Share: [share.zabbix.com](https://share.zabbix.com)
-- Community Forums: [zabbix.com/forum](https://www.zabbix.com/forum)
+- **Zabbix Documentation**: [zabbix.com/documentation](https://www.zabbix.com/documentation)
+- **Zabbix Share**: [share.zabbix.com](https://share.zabbix.com)
+- **Community Forums**: [zabbix.com/forum](https://www.zabbix.com/forum)
+
+See juhend on mõeldud alustavale kasutajale, kes soovib saada põhjalikku ülevaadet Zabbix'i võimalustest ja selle kasutuselevõtust. Edukat jälgimist!
+
