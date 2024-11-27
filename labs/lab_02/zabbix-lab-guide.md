@@ -302,6 +302,25 @@ sudo netplan apply
 ip addr show
 ping 192.168.56.1
 ```
+IF!!!!! if using bridged mode, the netplan configuration is much simpler:
+```bash
+# Edit netplan configuration
+sudo nano /etc/netplan/00-installer-config.yaml
+
+network:
+  version: 2
+  ethernets:
+    enp0s3:   # Bridged adapter
+      dhcp4: yes
+
+# Apply configuration
+sudo netplan apply
+
+# Verify connection and note your IP
+ip addr show
+```
+
+The VM will get an IP from your local network's DHCP server (usually your router). No manual IP configuration needed.
 
 # Guide to set-up Zabbix Web Monitoring
 
