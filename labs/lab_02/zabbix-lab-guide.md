@@ -208,39 +208,16 @@ graph TD
 
 ### **Bridged network adapter can work as an alternative. Here's the quick setup:**
 
----
+The network config in VirtualBox is simple:
 
-1. VM Network Configuration:
-```
-Adapter 1: Bridged Adapter
-- Select your physical network interface
-- Each VM will get an IP from your local network DHCP
-```
+VM Settings > Network
+Change to "Bridged Adapter"
+Select your physical network interface
 
-Benefits:
-- Direct connection to local network
-- Easier network setup
-- No need for host-only configuration
+No need for manual netplan configuration - the VM will get an IP automatically from your network's DHCP.
 
-Update VM network settings:
-```bash
-# Edit netplan
-sudo nano /etc/netplan/00-installer-config.yaml
 
-network:
-  version: 2
-  ethernets:
-    enp0s3:   # Bridged adapter
-      dhcp4: yes
-
-sudo netplan apply
-```
-
-Note: Make sure to use the IP addresses assigned by your local network DHCP when accessing Zabbix and test websites.
-
----
-
-## Part 2: Operating System Installation
+## Part 2: Operating System Installation ( IF not bridged)
 
 ### For Both VMs:
 ```plaintext
