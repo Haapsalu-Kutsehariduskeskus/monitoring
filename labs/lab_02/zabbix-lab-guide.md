@@ -66,7 +66,7 @@ sudo apt update
 2. Install Zabbix Server and Frontend:
 ```bash
 # Install Zabbix server, frontend, and agent
-sudo apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache2 zabbix-sql-scripts zabbix-agent
+sudo apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent
 
 # Install MySQL server
 sudo apt install -y mysql-server
