@@ -112,6 +112,8 @@ Description: Memory usage increased by more than 100MB in one hour
 
 ## Gmail Alert Action
 
+https://yatebts.com/set-up-email-alerts-in-zabbix-using-a-gmail-account/
+
 Create one action to handle all triggers:
 ```plaintext
 Name: Service Monitoring Alerts
