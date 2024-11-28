@@ -1,4 +1,4 @@
-# Complete Zabbix Monitoring Lab Setup Guide
+# Zabbix Monitoring Lab Setup Guide
 
 ## Prerequisites
 - VirtualBox installed on your computer
@@ -6,345 +6,154 @@
 - At least 8GB RAM available on host machine
 - 50GB free disk space
 
-## Submitting Guide
-
-### Required Screenshots for Lab Submission
-
-### 1. Virtual Machine Setup
-```
-Screenshot 1: VirtualBox Manager showing both VMs
-- Show VMs: ZabbixServer-[YourName] and TestWeb-[YourName]
-- Include VM settings (RAM, CPU, Storage)
-```
-### 2. Test Website
-```
-Screenshot 10: Test Website Running
-- Browser showing your test website
-- URL visible (http://192.168.56.20)
-
-Screenshot 11: Website Monitoring Results
-- Show monitoring results in Zabbix
-- Include response times and availability
-```
-### 3. Honeycomb Visualization
-```
-Screenshot 12: Honeycomb Widget
-- Show configured honeycomb visualization
-- Include performance metrics
-```
-## Naming Convention
-```
-Virtual Machines:
-- ZabbixServer-[YourName]  (Example: ZabbixServer-JohnSmith)
-- TestWeb-[YourName]       (Example: TestWeb-JohnSmith)
-
-Hostnames:
-- zabbix-[yourname]        (Example: zabbix-johnsmith)
-- webserver-[yourname]     (Example: webserver-johnsmith)
-
-Docker Containers:
-- zabbix-server-[yourname]
-- zabbix-web-[yourname]
-- mysql-[yourname]
-- testsite-[yourname]
-```
-## Submission Instructions
-1. Create a single PDF ( DOCX) document containing:
-   - All required screenshots
-   - Any additional documentation
-
-2. File naming:
-   ```
-   ZabbixLab-[YourName]-[Date].pdf/docx
-   Example: ZabbixLab-JohnSmith-2024-11-28.pdf/docx
-   ```
-
-3. Submit to Google Classroom:
-   - Attach files
-   - Add any comments about specific challenges
-
-```mermaid
-graph TD
-    subgraph "Physical Network"
-        Router["Home Router\n192.168.1.1"]
-        Internet((Internet))
-        Router --- Internet
-    end
-
-    subgraph "Host Computer"
-        VBox["VirtualBox"]
-        Physical["Physical NIC"]
-        Router --- Physical
-    end
-
-    subgraph "Option 1: Host-only Network"
-        VBoxNet["VBoxNet0\n192.168.56.1/24"]
-        ZabbixVM1["Zabbix Server VM\n192.168.56.10"]
-        TestVM1["Test Website VM\n192.168.56.20"]
-        
-        VBox --- VBoxNet
-        VBoxNet --- ZabbixVM1
-        VBoxNet --- TestVM1
-        ZabbixVM1 -.- NAT1["NAT"]
-        TestVM1 -.- NAT2["NAT"]
-        NAT1 --- Physical
-        NAT2 --- Physical
-    end
-
-    subgraph "Option 2: Bridged Network"
-        ZabbixVM2["Zabbix Server VM\n192.168.1.x"]
-        TestVM2["Test Website VM\n192.168.1.y"]
-        
-        Router --- ZabbixVM2
-        Router --- TestVM2
-    end
-
-    style Router fill:#f9f,stroke:#333
-    style ZabbixVM1 fill:#bbf,stroke:#333
-    style TestVM1 fill:#bfb,stroke:#333
-    style ZabbixVM2 fill:#bbf,stroke:#333
-    style TestVM2 fill:#bfb,stroke:#333
-```
-
-## Part 1: Virtual Machine Setup
-
-### **Bridged network adapter can work as an alternative. Here's the quick setup:**
-
-The network config in VirtualBox is simple:
-
-VM Settings > Network
-Change to "Bridged Adapter"
-Select your physical network interface
-
-No need for manual netplan configuration - the VM will get an IP automatically from your network's DHCP.
+## VM Configuration
 
 ### VM1: Zabbix Server
 ```plaintext
-Name: ZabbixServer
+Name: ZabbixServer-[YourName]
 Specifications:
 - OS: Ubuntu Server 22.04 LTS
 - RAM: 4GB
 - CPU: 2 cores
 - Storage: 20GB
-- Network Adapters:
-  1. NAT (Internet access)
-  2. Host-only (192.168.56.10)
-
-Steps:
-1. Open VirtualBox
-2. Click "New"
-3. Fill in details:
-   - Name: ZabbixServer
-   - Type: Linux
-   - Version: Ubuntu 64-bit
-4. Set memory: 4096MB
-5. Create virtual hard disk: 20GB (VDI, Dynamically allocated)
-6. Configure network:
-   - Settings → Network
-   - Adapter 1: NAT
-   - Adapter 2: Host-only (vboxnet0)
+- Network: Bridged Adapter
 ```
 
 ### VM2: Test Website Server
 ```plaintext
-Name: TestWebServer
+Name: TestWeb-[YourName]
 Specifications:
 - OS: Ubuntu Server 22.04 LTS
 - RAM: 2GB
 - CPU: 1 core
 - Storage: 15GB
-- Network Adapters:
-  1. NAT (Internet access)
-  2. Host-only (192.168.56.20)
+- Network: Bridged Adapter
+```
 
-Steps:
-1. Open VirtualBox
-2. Click "New"
-3. Fill in details:
-   - Name: TestWebServer
-   - Type: Linux
-   - Version: Ubuntu 64-bit
-4. Set memory: 2048MB
-5. Create virtual hard disk: 15GB (VDI, Dynamically allocated)
-6. Configure network:
+## Network Setup
+1. In VirtualBox, for each VM:
    - Settings → Network
-   - Adapter 1: NAT
-   - Adapter 2: Host-only (vboxnet0)
-```
+   - Adapter 1: Bridged Adapter
+   - Select your physical network interface
 
-```mermaid
-graph TD
-    subgraph "Zabbix Server VM"
-        ZabbixServer["Zabbix Server\nContainer"]
-        ZabbixWeb["Zabbix Web UI\nContainer"]
-        MySQL["MySQL\nContainer"]
-        
-        ZabbixServer --- MySQL
-        ZabbixWeb --- ZabbixServer
-    end
+## Operating System Installation
 
-    subgraph "Test Website VM"
-        Nginx["NGINX\nContainer"]
-        Site1["Test Site 1\nStatic Content"]
-        Site2["Test Site 2\nUser Journey"]
-        
-        Nginx --- Site1
-        Nginx --- Site2
-    end
+1. Basic Ubuntu Server Installation:
+   - Choose language and keyboard layout
+   - Select "Ubuntu Server"
+   - Accept network configuration (DHCP)
+   - Configure storage (use entire disk)
+   - Complete initial setup
 
-    Browser["Web Browser\nMonitoring Dashboard"]
-    Browser --- ZabbixWeb
-    ZabbixServer -.->|"Monitor"| Nginx
-    
-    style ZabbixServer fill:#bbf,stroke:#333
-    style ZabbixWeb fill:#bfb,stroke:#333
-    style MySQL fill:#fbf,stroke:#333
-    style Nginx fill:#fbb,stroke:#333
-    style Browser fill:#ff9,stroke:#333
-```
-
-### Host-Only Network Configuration
-```plaintext
-1. VirtualBox → File → Host Network Manager
-2. Create new network (if not exists):
-   - Network Name: vboxnet0
-   - IPv4 Address: 192.168.56.1
-   - Network Mask: 255.255.255.0
-   - Enable DHCP Server:
-     - Server Address: 192.168.56.100
-     - Lower Address Bound: 192.168.56.101
-     - Upper Address Bound: 192.168.56.254
-```
-
-## Part 2: Operating System Installation
-
-### For Both VMs:
-```plaintext
-1. Start VM
-2. Select Ubuntu ISO
-3. Choose language and keyboard layout
-4. Network configuration (only if you picked "not bridged"):
-   - Configure both network interfaces
-   - Primary interface: DHCP (NAT)
-   - Secondary interface: Static IP
-     VM1: 192.168.56.10
-     VM2: 192.168.56.20
-5. Storage configuration:
-   - Use entire disk
-   - Set up as LVM
-6. Profile setup:
-   VM1:
-   - Your name: zabbix
-   - Server name: zabbixserver
-   - Username: zabbix
-   - Password: <your_secure_password>
-   
-   VM2:
-   - Your name: webadmin
-   - Server name: webserver
-   - Username: webadmin
-   - Password: <your_secure_password>
-7. Install OpenSSH server
-8. No additional packages needed
-9. Complete installation and reboot
-```
-
-### Post-Installation Network Setup, if you network "not bridged"
-On both VMs:
+2. System Updates:
 ```bash
-# Edit netplan configuration
-sudo nano /etc/netplan/00-installer-config.yaml
-
-# Add configuration:
-network:
-  version: 2
-  ethernets:
-    enp0s3:   # NAT adapter
-      dhcp4: yes
-    enp0s8:   # Host-only adapter
-      dhcp4: no
-      addresses:
-        - 192.168.56.10/24  # For ZabbixServer
-        # OR
-        - 192.168.56.20/24  # For TestWebServer
-      routes:
-        - to: 192.168.56.0/24
-          via: 192.168.56.1
-
-# Apply configuration
-sudo netplan apply
-
-# Verify
-ip addr show
-ping 192.168.56.1
-```
-# Guide to set-up Zabbix Web Monitoring
-
-## Part 1: Basic Concepts
-
-### What is Docker?
-Docker is a platform that packages applications and their dependencies into containers. Think of containers as lightweight, standalone packages that include everything needed to run an application.
-
-### What is Web Monitoring?
-Web monitoring allows you to:
-- Track website availability
-- Measure load times
-- Check specific content
-- Monitor user interactions
-- Capture screenshots
-- Alert on issues
-
-## Part 2: Installation Prerequisites
-
-### Install Docker on Ubuntu
-```bash
-# Update system
 sudo apt update
 sudo apt upgrade -y
-
-# Install required packages
-sudo apt install -y \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    software-properties-common
-
-# Add Docker's official GPG key
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-
-# Add Docker repository
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# Install Docker
-sudo apt update
-sudo apt install -y docker-ce docker-ce-cli containerd.io
-
-# Add your user to docker group (avoid using sudo with docker)
-sudo usermod -aG docker $USER
-
-# Install Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
-# Verify installations
-docker --version
-docker-compose --version
-
-# Start Docker service
-sudo systemctl start docker
-sudo systemctl enable docker
 ```
 
-## Part 3: Setting Up Test Websites
+## Zabbix Server Installation
 
-### Create Test Website 1 (Simple Static)
+1. Add Zabbix Repository:
 ```bash
-# Create directory structure
-mkdir -p ~/zabbix-lab/test-sites/site1
-cd ~/zabbix-lab/test-sites/site1
+# Download and install the Zabbix repository package
+wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4%2Bubuntu22.04_all.deb
+sudo dpkg -i zabbix-release_6.0-4+ubuntu22.04_all.deb
 
-# Create index.html
-cat << EOF > index.html
+# Update package list
+sudo apt update
+```
+
+2. Install Zabbix Server and Frontend:
+```bash
+# Install Zabbix server, frontend, and agent
+sudo apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache2 zabbix-sql-scripts zabbix-agent
+
+# Install MySQL server
+sudo apt install -y mysql-server
+```
+
+3. Configure Database:
+```bash
+# Secure MySQL installation
+sudo mysql_secure_installation
+
+# Create database
+sudo mysql -uroot -p
+mysql> create database zabbix character set utf8mb4 collate utf8mb4_bin;
+mysql> create user zabbix@localhost identified by 'password';
+mysql> grant all privileges on zabbix.* to zabbix@localhost;
+mysql> quit;
+
+# Import initial schema
+sudo zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql -uzabbix -p zabbix
+```
+
+4. Configure Zabbix Server:
+```bash
+# Edit configuration
+sudo nano /etc/zabbix/zabbix_server.conf
+DBPassword=password
+
+# Start services
+sudo systemctl restart zabbix-server zabbix-agent apache2
+sudo systemctl enable zabbix-server zabbix-agent apache2
+```
+
+## Test Website Setup
+
+1. Install NGINX:
+```bash
+sudo apt install -y nginx
+```
+
+2. Create Test Website:
+```bash
+sudo nano /var/www/html/index.html
+```
+
+Add content:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Site</title>
+</head>
+<body>
+    <h1>Test Website for Zabbix Monitoring</h1>
+    <div id="status">Status: OK</div>
+    <div id="time"></div>
+    <script>
+        setInterval(() => {
+            document.getElementById('time').textContent = new Date().toLocaleString();
+        }, 1000);
+    </script>
+</body>
+</html>
+```
+
+## Verification Steps
+
+1. Access Zabbix Web Interface:
+   - http://[zabbix-server-ip]/zabbix
+   - Default credentials:
+     - User: Admin
+     - Password: zabbix
+
+2. Add Host Monitoring:
+   - Configuration → Hosts → Create host
+   - Add test website IP
+   - Configure web monitoring scenarios
+
+## Test Website Setup
+
+### Create Test Website 1 (Static Content)
+```bash
+sudo mkdir -p /var/www/html/site1
+sudo nano /var/www/html/site1/index.html
+```
+
+Add content:
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -383,23 +192,16 @@ cat << EOF > index.html
     </script>
 </body>
 </html>
-EOF
-
-# Create Dockerfile
-cat << EOF > Dockerfile
-FROM nginx:alpine
-COPY index.html /usr/share/nginx/html/
-EXPOSE 80
-EOF
 ```
 
-### Create Test Website 2 (Dynamic Content)
+### Create Test Website 2 (User Journey)
 ```bash
-mkdir -p ~/zabbix-lab/test-sites/site2
-cd ~/zabbix-lab/test-sites/site2
+sudo mkdir -p /var/www/html/site2
+sudo nano /var/www/html/site2/index.html
+```
 
-# Create index.html with forms and interactive elements
-cat << EOF > index.html
+Add content:
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -464,265 +266,382 @@ cat << EOF > index.html
     </script>
 </body>
 </html>
-EOF
-
-# Create Dockerfile
-cat << EOF > Dockerfile
-FROM nginx:alpine
-COPY index.html /usr/share/nginx/html/
-EXPOSE 80
-EOF
 ```
 
-## Part 4: Docker Compose Setup
-
-### Create Docker Compose Configuration
+### Configure NGINX Virtual Hosts
 ```bash
-cd ~/zabbix-lab
-cat << EOF > docker-compose.yml
-version: '3.5'
-
-services:
-  zabbix-server:
-    image: zabbix/zabbix-server-mysql:ubuntu-6.0-latest
-    restart: always
-    ports:
-      - "10051:10051"
-    environment:
-      - DB_SERVER_HOST=mysql-server
-      - MYSQL_DATABASE=zabbix
-      - MYSQL_USER=zabbix
-      - MYSQL_PASSWORD=zabbix_pwd
-      - MYSQL_ROOT_PASSWORD=root_pwd
-    depends_on:
-      - mysql-server
-
-  zabbix-web:
-    image: zabbix/zabbix-web-nginx-mysql:ubuntu-6.0-latest
-    restart: always
-    ports:
-      - "80:8080"
-    environment:
-      - DB_SERVER_HOST=mysql-server
-      - MYSQL_DATABASE=zabbix
-      - MYSQL_USER=zabbix
-      - MYSQL_PASSWORD=zabbix_pwd
-      - ZBX_SERVER_HOST=zabbix-server
-      - PHP_TZ=Europe/Tallinn
-    depends_on:
-      - zabbix-server
-
-  mysql-server:
-    image: mysql:8.0
-    restart: always
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_DATABASE=zabbix
-      - MYSQL_USER=zabbix
-      - MYSQL_PASSWORD=zabbix_pwd
-      - MYSQL_ROOT_PASSWORD=root_pwd
-    command:
-      - mysqld
-      - --character-set-server=utf8
-      - --collation-server=utf8_bin
-
-  test-site1:
-    build: ./test-sites/site1
-    ports:
-      - "8081:80"
-
-  test-site2:
-    build: ./test-sites/site2
-    ports:
-      - "8082:80"
-EOF
+sudo nano /etc/nginx/sites-available/site1
 ```
 
-## Part 5: Launch the Environment
+Add configuration:
+```nginx
+server {
+    listen 8081;
+    server_name _;
+    root /var/www/html/site1;
+    index index.html;
+}
+```
 
 ```bash
-# Build and start all containers
-cd ~/zabbix-lab
-docker-compose up -d --build
-
-# Check status
-docker-compose ps
-
-# View logs
-docker-compose logs -f
+sudo nano /etc/nginx/sites-available/site2
 ```
 
-## Part 6: Configure Web Monitoring
+Add configuration:
+```nginx
+server {
+    listen 8082;
+    server_name _;
+    root /var/www/html/site2;
+    index index.html;
+}
+```
 
-1. Access Zabbix Web Interface:
-   - Open browser: http://localhost
-   - Default login: 
-     - Username: Admin
-     - Password: zabbix
+Enable sites:
+```bash
+sudo ln -s /etc/nginx/sites-available/site1 /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/site2 /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+```
 
-2. Add Web Scenarios:
+## Configure Web Monitoring in Zabbix
 
 ### Simple Website Monitoring (Site 1)
-```
-Configuration → Hosts → Create Host
-- Host name: TestSite1
-- Groups: Web scenarios
-- Interfaces: Agent = localhost
+1. Go to: Configuration → Hosts → Create Host
+   - Host name: TestSite1
+   - Groups: Web scenarios
+   - Interfaces: Agent = IP of test website VM
 
-Add Web Scenario:
-- Name: Basic Website Monitoring
-- Update interval: 30s
-Steps:
-1. Homepage Check
-   - Name: Homepage
-   - URL: http://test-site1:80
-   - Required status codes: 200
-   - Required string: Test Site 1
-2. Status Check
-   - Name: Status
-   - URL: http://test-site1:80
-   - Required string: Status: OK
-```
+2. Add Web Scenario:
+   - Name: Basic Website Monitoring
+   - Update interval: 30s
+   
+3. Add Steps:
+   - Step 1: Homepage Check
+     - Name: Homepage
+     - URL: http://[test-website-ip]:8081
+     - Required status codes: 200
+     - Required string: Test Site 1
+   - Step 2: Status Check
+     - Name: Status
+     - URL: http://[test-website-ip]:8081
+     - Required string: Status: OK
 
 ### User Journey Monitoring (Site 2)
-```
-Configuration → Hosts → Create Host
-- Host name: TestSite2
-- Groups: Web scenarios
-- Interfaces: Agent = localhost
+1. Go to: Configuration → Hosts → Create Host
+   - Host name: TestSite2
+   - Groups: Web scenarios
+   - Interfaces: Agent = IP of test website VM
 
-Add Web Scenario:
-- Name: User Journey Monitoring
-- Update interval: 1m
-Steps:
-1. Login Page
-   - Name: Login
-   - URL: http://test-site2:80
-   - Required string: Login
-2. Product Selection
-   - Name: Products
-   - URL: http://test-site2:80
-   - Required string: Product Selection
-   Variables:
-   - {username} = test
-   - {password} = test
-3. Checkout
-   - Name: Checkout
-   - URL: http://test-site2:80
-   - Required string: Checkout
-```
+2. Add Web Scenario:
+   - Name: User Journey Monitoring
+   - Update interval: 1m
+   
+3. Add Steps:
+   - Step 1: Login Page
+     - Name: Login
+     - URL: http://[test-website-ip]:8082
+     - Required string: Login
+   - Step 2: Product Selection
+     - Name: Products
+     - URL: http://[test-website-ip]:8082
+     - Required string: Product Selection
+     Variables:
+     - {username} = test
+     - {password} = test
+   - Step 3: Checkout
+     - Name: Checkout
+     - URL: http://[test-website-ip]:8082
+     - Required string: Checkout
 
-## Part 7: Create Dynamic Dashboard
+## Create Dynamic Dashboard
 
 1. Create new dashboard:
-   ```
-   Monitoring → Dashboards → Create Dashboard
-   Name: Web Monitoring Overview
-   ```
+   - Go to: Monitoring → Dashboards → Create Dashboard
+   - Name: Web Monitoring Overview
 
 2. Add widgets:
-   ```
-   Widget 1: Web Monitoring Summary
-   - Type: Web monitoring
-   - Name: Website Status
-   - Hosts: TestSite1, TestSite2
+   - Widget 1: Web Monitoring Summary
+     - Type: Web monitoring
+     - Name: Website Status
+     - Hosts: TestSite1, TestSite2
    
-   Widget 2: Problems Overview
-   - Type: Problems
-   - Name: Current Issues
-   - Show: Web monitoring problems
+   - Widget 2: Problems Overview
+     - Type: Problems
+     - Name: Current Issues
+     - Show: Web monitoring problems
    
-   Widget 3: Response Time Graph
-   - Type: Graph (classic)
-   - Name: Performance Overview
-   - Data: Web scenario response times
-   ```
+   - Widget 3: Response Time Graph
+     - Type: Graph (classic)
+     - Name: Performance Overview
+     - Data: Web scenario response times
 
-3. Configure widget interactivity:
-   - Click gear icon on widget
-   - Enable "Dynamic item"
-   - Select source widget (e.g., Web Monitoring Summary)
-
-## Part 8: Testing Scenarios
-
-### Test Case 1: Availability
-```bash
-# Stop test site 1
-docker-compose stop test-site1
-
-# Observe dashboard changes
-# Start test site 1
-docker-compose start test-site1
-```
-
-### Test Case 2: Performance
-```bash
-# Modify test site 1 nginx config
-docker exec -it zabbix-lab_test-site1_1 sh
-echo "limit_rate 100k;" >> /etc/nginx/nginx.conf
-nginx -s reload
-```
-
-### Test Case 3: Content Changes
-```bash
-# Modify test site 1 content
-cd ~/zabbix-lab/test-sites/site1
-sed -i 's/Status: OK/Status: Modified/' index.html
-docker-compose restart test-site1
-```
-
-## Part 9: Honeycomb Views
-
-### Create Honeycomb Widget
-1. Add custom widget:
-   ```
-   Dashboard → Add Widget → Graph
-   Type: Graph (prototype)
+3. Configure Honeycomb View:
+   - Add Widget: Graph (prototype)
    - Display: Honeycomb
    - Data: Web response times
    - Color mapping:
      - Green: <1s
      - Yellow: 1-3s
      - Red: >3s
-   ```
+   - Configure cells:
+     - Cell size: Medium
+     - Metric: Response time
+     - Group by: Host
+     - Color by: Status
 
-2. Configure honeycomb cells:
-   ```
-   - Cell size: Medium
-   - Metric: Response time
-   - Group by: Host
-   - Color by: Status
-   ```
+## Testing Scenarios
 
-## Part 10: Common Issues & Troubleshooting
-
-### Database Connection Issues
+### Test Case 1: Availability
 ```bash
-# Check MySQL container
-docker-compose logs mysql-server
+# Stop NGINX
+sudo systemctl stop nginx
 
-# Connect to MySQL
-docker exec -it zabbix-lab_mysql-server_1 mysql -uzabbix -pzabbix_pwd
+# Observe dashboard changes
+# Start NGINX
+sudo systemctl start nginx
 ```
 
-### Web Interface Issues
+### Test Case 2: Performance
 ```bash
-# Check web logs
-docker-compose logs zabbix-web
+# Add delay to NGINX
+sudo nano /etc/nginx/nginx.conf
+# Add in http block:
+limit_rate 100k;
 
-# Restart web interface
-docker-compose restart zabbix-web
+sudo nginx -s reload
 ```
 
-### Monitoring Issues
+### Test Case 3: Content Changes
 ```bash
-# Check Zabbix server logs
-docker-compose logs zabbix-server
+# Modify test site content
+sudo nano /var/www/html/site1/index.html
+# Change "Status: OK" to "Status: Modified"
 
-# Verify network connectivity
-docker network ls
-docker network inspect zabbix-lab_default
+sudo systemctl reload nginx
 ```
 
-Remember to update passwords and secure your installation in a production environment!
+## Required Screenshots for Lab Submission
+
+1. Virtual Machine Setup:
+   - VirtualBox Manager showing both VMs
+   - Network settings showing bridged configuration
+
+2. Test Website:
+   - Browser showing test website 1
+   - Browser showing test website 2
+   - Website monitoring results in Zabbix
+
+3. Zabbix Monitoring:
+   - Web scenario configuration
+   - Dynamic dashboard with widgets
+   - Honeycomb visualization
+   - Test scenario results
+
+# Extra: Practical Extensions for Zabbix Lab
+
+## 1. Web Application Monitoring Enhancement
+
+### Extended Web Scenarios
+```bash
+# Add authentication monitoring
+# Create login form on test site:
+sudo nano /var/www/html/site2/login.php
+<?php
+session_start();
+if ($_POST['username'] == 'test' && $_POST['password'] == 'test') {
+    echo "Login successful";
+} else {
+    echo "Login failed";
+}
+?>
+```
+
+### Performance Testing
+```bash
+# Create load testing script
+sudo apt install apache2-utils
+ab -n 1000 -c 10 http://[test-website-ip]:8081/
+```
+
+## 2. System Monitoring
+
+### Process Monitoring
+```bash
+# Monitor NGINX processes
+sudo nano /etc/zabbix/zabbix_agentd.d/nginx.conf
+UserParameter=nginx.processes,ps aux | grep nginx | wc -l
+```
+
+### Resource Usage
+```bash
+# Monitor disk space
+UserParameter=custom.disk.usage[*],df -h $1 | tail -1 | awk '{print $5}' | sed 's/%//'
+```
+
+## 3. Log Analysis
+
+### NGINX Log Monitoring
+```bash
+# Configure NGINX logging
+sudo nano /etc/nginx/nginx.conf
+access_log /var/log/nginx/access.log;
+error_log /var/log/nginx/error.log;
+
+# Monitor error rate
+UserParameter=nginx.errors,grep -c "error" /var/log/nginx/error.log
+```
+
+### Custom Log Patterns
+```bash
+# Create test logs
+echo "ERROR: Test error message" >> /var/log/test.log
+echo "WARNING: Test warning" >> /var/log/test.log
+
+# Monitor patterns
+UserParameter=custom.log.errors,grep -c "ERROR" /var/log/test.log
+UserParameter=custom.log.warnings,grep -c "WARNING" /var/log/test.log
+```
+
+## 4. Alerting System
+
+### Email Notifications
+```bash
+# Install and configure postfix for local mail
+sudo apt install postfix
+sudo postfix stop
+sudo postconf -e "inet_interfaces = loopback-only"
+sudo postfix start
+
+# Test mail
+echo "Test mail" | mail -s "Test Subject" your@email.com
+```
+
+### Custom Scripts
+```bash
+# Create notification script
+sudo nano /usr/lib/zabbix/alertscripts/telegram.sh
+#!/bin/bash
+MESSAGE=$1
+RECIPIENT=$2
+echo "$MESSAGE" >> /var/log/zabbix/notifications.log
+date >> /var/log/zabbix/notifications.log
+```
+
+## 5. Database Monitoring
+
+### MySQL Basic Monitoring
+```bash
+# Install MySQL
+sudo apt install mysql-server
+
+# Create test database
+mysql -u root -p
+CREATE DATABASE testdb;
+CREATE TABLE users (id INT, name VARCHAR(50));
+INSERT INTO users VALUES (1, 'Test User');
+
+# Monitor MySQL
+UserParameter=mysql.table.size[*],echo "SELECT COUNT(*) FROM $1" | mysql testdb -N
+```
+
+## 6. Dashboard Creation
+
+### Custom Graphs
+```plaintext
+Create combined graphs showing:
+- Website response time vs NGINX process count
+- Disk usage vs log file size
+- Error rates over time
+```
+
+### Interactive Elements
+- Add URL parameters for time range selection
+- Create drill-down capabilities from overview to detailed views
+- Add dynamic filtering by host groups
+
+## 7. Security Practice
+
+### Basic Hardening
+```bash
+# Secure Zabbix web server
+sudo nano /etc/apache2/conf-available/security.conf
+ServerTokens Prod
+ServerSignature Off
+TraceEnable Off
+
+# Configure basic authentication for test sites
+sudo apt install apache2-utils
+sudo htpasswd -c /etc/nginx/.htpasswd admin
+```
+
+### SSL Setup
+```bash
+# Create self-signed certificate
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/ssl/private/nginx-selfsigned.key \
+    -out /etc/ssl/certs/nginx-selfsigned.crt
+```
+
+## 8. Backup and Recovery
+
+### Configuration Backup
+```bash
+# Backup script
+sudo nano /usr/local/sbin/backup-zabbix.sh
+#!/bin/bash
+BACKUP_DIR="/backup/zabbix"
+DATE=$(date +%Y%m%d)
+
+# Backup configurations
+tar -czf $BACKUP_DIR/config-$DATE.tar.gz /etc/zabbix/
+mysqldump -u zabbix -p zabbix > $BACKUP_DIR/db-$DATE.sql
+
+# Rotate old backups
+find $BACKUP_DIR -name "*.tar.gz" -mtime +7 -delete
+find $BACKUP_DIR -name "*.sql" -mtime +7 -delete
+```
+
+## 9. Performance Testing
+
+### Load Testing
+```bash
+# Install stress tool
+sudo apt install stress
+
+# Create stress test
+stress --cpu 2 --io 1 --vm 1 --vm-bytes 128M --timeout 300s
+```
+
+### Response Time Analysis
+```bash
+# Monitor response times under load
+for i in {1..100}; do
+  curl -o /dev/null -s -w "%{time_total}\n" http://[test-website-ip]:8081/
+  sleep 1
+done
+```
+
+## 10. Troubleshooting Exercises
+
+### Common Issues
+1. Service failures
+```bash
+# Simulate service issue
+sudo systemctl stop nginx
+```
+
+2. Disk space issues
+```bash
+# Fill up disk space
+dd if=/dev/zero of=/tmp/testfile bs=1M count=1000
+```
+
+3. High CPU usage
+```bash
+# Create CPU load
+yes > /dev/null &
+```
+
+These exercises use only the tools and services available in your lab VMs while providing practical, hands-on experience with monitoring and system administration.
