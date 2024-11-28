@@ -53,6 +53,9 @@ sudo apt upgrade -y
 
 ## Zabbix Server Installation
 
+Check official documentation:
+https://www.zabbix.com/download?zabbix=7.0&os_distribution=ubuntu&os_version=22.04&components=server_frontend_agent&db=mysql&ws=apache
+
 1. Add Zabbix Repository:
 ```bash
 # Download and install the Zabbix repository package
