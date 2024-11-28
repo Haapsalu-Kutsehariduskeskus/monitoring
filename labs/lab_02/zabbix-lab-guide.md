@@ -108,6 +108,16 @@ graph TD
 
 ## Part 1: Virtual Machine Setup
 
+### **Bridged network adapter can work as an alternative. Here's the quick setup:**
+
+The network config in VirtualBox is simple:
+
+VM Settings > Network
+Change to "Bridged Adapter"
+Select your physical network interface
+
+No need for manual netplan configuration - the VM will get an IP automatically from your network's DHCP.
+
 ### VM1: Zabbix Server
 ```plaintext
 Name: ZabbixServer
@@ -205,17 +215,6 @@ graph TD
      - Lower Address Bound: 192.168.56.101
      - Upper Address Bound: 192.168.56.254
 ```
-
-### **Bridged network adapter can work as an alternative. Here's the quick setup:**
-
-The network config in VirtualBox is simple:
-
-VM Settings > Network
-Change to "Bridged Adapter"
-Select your physical network interface
-
-No need for manual netplan configuration - the VM will get an IP automatically from your network's DHCP.
-
 
 ## Part 2: Operating System Installation ( IF not bridged)
 
