@@ -135,3 +135,9 @@ Recovery operations:
 Recovery message:
 RESOLVED: {EVENT.NAME}
 Duration: {EVENT.DURATION}
+
+## Telegram Alert Action
+
+https://gist.github.com/KostyaEsmukov/1d49b04eaed1b8de3c8d378943fc1647
+
+
