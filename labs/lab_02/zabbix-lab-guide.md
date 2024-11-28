@@ -546,28 +546,7 @@ UserParameter=custom.log.warnings,grep -c "WARNING" /var/log/test.log
 
 ## 4. Alerting System
 
-### Email Notifications
-```bash
-# Install and configure postfix for local mail
-sudo apt install postfix
-sudo postfix stop
-sudo postconf -e "inet_interfaces = loopback-only"
-sudo postfix start
-
-# Test mail
-echo "Test mail" | mail -s "Test Subject" your@email.com
-```
-
-### Custom Scripts
-```bash
-# Create notification script
-sudo nano /usr/lib/zabbix/alertscripts/telegram.sh
-#!/bin/bash
-MESSAGE=$1
-RECIPIENT=$2
-echo "$MESSAGE" >> /var/log/zabbix/notifications.log
-date >> /var/log/zabbix/notifications.log
-```
+Set-up "Alert triggers for Each Exercise"
 
 ## 5. Database Monitoring
 
