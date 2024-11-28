@@ -216,14 +216,14 @@ graph TD
      - Upper Address Bound: 192.168.56.254
 ```
 
-## Part 2: Operating System Installation ( IF not bridged)
+## Part 2: Operating System Installation
 
 ### For Both VMs:
 ```plaintext
 1. Start VM
 2. Select Ubuntu ISO
 3. Choose language and keyboard layout
-4. Network configuration:
+4. Network configuration (only if you picked "not bridged"):
    - Configure both network interfaces
    - Primary interface: DHCP (NAT)
    - Secondary interface: Static IP
@@ -249,7 +249,7 @@ graph TD
 9. Complete installation and reboot
 ```
 
-### Post-Installation Network Setup
+### Post-Installation Network Setup, if you network "not bridged"
 On both VMs:
 ```bash
 # Edit netplan configuration
@@ -278,26 +278,6 @@ sudo netplan apply
 ip addr show
 ping 192.168.56.1
 ```
-IF!!!!! if using bridged mode, the netplan configuration is much simpler:
-```bash
-# Edit netplan configuration
-sudo nano /etc/netplan/00-installer-config.yaml
-
-network:
-  version: 2
-  ethernets:
-    enp0s3:   # Bridged adapter
-      dhcp4: yes
-
-# Apply configuration
-sudo netplan apply
-
-# Verify connection and note your IP
-ip addr show
-```
-
-The VM will get an IP from your local network's DHCP server (usually your router). No manual IP configuration needed.
-
 # Guide to set-up Zabbix Web Monitoring
 
 ## Part 1: Basic Concepts
