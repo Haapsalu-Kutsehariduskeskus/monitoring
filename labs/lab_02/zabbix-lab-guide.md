@@ -144,6 +144,46 @@ Add content:
    - Add test website IP
    - Configure web monitoring scenarios
 
+## Agent Configuration
+
+### On Both VMs
+```bash
+# Install Zabbix agent
+sudo apt install zabbix-agent
+
+# Edit main configuration
+sudo nano /etc/zabbix/zabbix_agentd.conf
+
+# Change these parameters:
+Server=192.168.1.x         # Your Zabbix server IP
+ServerActive=192.168.1.x   # Same as Server IP
+Hostname=webserver-[yourname]  # Must match name in Zabbix frontend
+
+# Create directory for custom parameters
+sudo mkdir -p /etc/zabbix/zabbix_agentd.d
+
+# Add custom monitoring parameters
+sudo nano /etc/zabbix/zabbix_agentd.d/custom_params.conf
+
+# Add these parameters:
+UserParameter=custom.nginx.status,systemctl is-active nginx
+UserParameter=custom.nginx.connections,netstat -an | grep :80 | grep ESTABLISHED | wc -l
+UserParameter=custom.web.response[*],curl -o /dev/null -s -w "%{time_total}" $1
+
+# Restart agent
+sudo systemctl restart zabbix-agent
+sudo systemctl enable zabbix-agent
+
+# Allow Zabbix agent port
+sudo ufw allow 10050/tcp
+```
+
+### Test Agent Connection
+```bash
+# From Zabbix server VM, test connection to web server VM:
+zabbix_get -s 192.168.1.y -k system.uptime
+```
+
 ## Test Website Setup
 
 ### Create Test Website 1 (Static Content)
