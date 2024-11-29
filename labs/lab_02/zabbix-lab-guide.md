@@ -101,6 +101,37 @@ DBPassword=password
 sudo systemctl restart zabbix-server zabbix-agent apache2
 sudo systemctl enable zabbix-server zabbix-agent apache2
 ```
+####From my notes####
+```bash
+service mysql status
+apt install mysql-server
+
+mysql
+mysq> create database zabbix character set utf8mb4 collate utf8mb4_bin;
+mysq> create user zabbix@localhost identified by 'password';
+mysq> grant all privileges on zabbix.* to zabbix@localhost;
+mysq> set global log_bin_trust_function_creators = 1;
+mysq> quit;
+
+zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix    #If prompted, enter the password that you've set for your zabbix@localhost user.
+
+mysql
+mysq>set global log_bin_trust_function_creators = 0;
+mysq>quit;
+
+
+vim /etc/zabbix/zabbix_server.conf
+DBPassword=password       # enter the password that you've set for your zabbix@localhost user.
+
+
+service zabbix-server start
+service zabbix-server status
+systemctl enable zabbix-server zabbix-agent apache2
+
+
+Login: http://your-server-ip-address/zabbix
+Change Admin password
+```
 
 ## Test Website Setup
 
